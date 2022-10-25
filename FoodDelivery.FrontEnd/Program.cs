@@ -6,7 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSession();
 builder.Services.AddSingleton<IOrderService, OrderService>();
+builder.Services.AddSingleton<IRestaurantServices, RestaurantServices>();
+builder.Services.AddSingleton<IAccountService, AccountService>();
 
 var app = builder.Build();
 
@@ -22,7 +25,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthorization();
 
 app.MapRazorPages();

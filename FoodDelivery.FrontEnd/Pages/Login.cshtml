@@ -1,5 +1,29 @@
 ﻿@page
 @model FoodDelivery.FrontEnd.Pages.LoginModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "Log in";
 }
+<h3>Log in</h3>
+<body>
+<form method="post">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" id="username" name="UserName" placeholder="Enter username">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name="UserPassword" placeholder="Password">
+  </div>
+  <br />
+  <input type="submit" value="Submit"  class="btn btn-primary" asp-page-handler="Submit">
+</form>
+
+    @{
+        if(Model.Message != null)
+        {
+            <p style="color:red">@Model.Message</p>
+        }
+    }
+</body>

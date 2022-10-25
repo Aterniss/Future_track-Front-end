@@ -1,0 +1,59 @@
+﻿@page "{id}"
+@model FoodDelivery.FrontEnd.Pages.Restaurants.ViewModel
+@{
+
+}
+
+<h3>Hello!</h3>
+
+
+<h4>Information about: @Model.Restaurant.RestaurantName</h4>
+<p>Restaurant address: @Model.Restaurant.RestaurantAddress</p>
+<p>Which zone: @Model.Restaurant.Zone?.ZoneName</p>
+<p>Category name: @Model.Restaurant.CategoryNameNavigation?.CategoryName</p>
+<p>Category description: @Model.Restaurant.CategoryNameNavigation?.CategoryDescription</p>
+<br />
+
+<h3>Dishes</h3>
+<table class="table">
+  <thead class="thead-dark">
+     <tr>
+        <th scope="col">#</th>
+        <th scope="col">Dish name</th>
+        <th scope="col">Dish description</th>
+        <th scope="col">Price</th>
+        <th scope="col">18+</th>
+     </tr>
+  </thead>
+    @{
+        if(Model.Restaurant.Dishes != null)
+        {
+        
+        int i = 1;
+        foreach(var item in Model.Restaurant.Dishes)
+        {
+            string require;
+            if(item.Require18 == true)
+            {
+                require = "Yes";
+            }
+            else
+            {
+                require = "No";
+            }
+            <tbody>
+          <tr>
+            <th scope="row">@i</th>
+            <td>@item.DishName</td>
+            <td>@item.DishDescription</td>
+            <td>@item.Price</td>
+            <td>@require</td>
+          </tr>
+            </tbody>
+        i += 1;
+        }
+}
+}
+</table>
+<br />
+<a class="btn btn-primary" href="/Restaurants">Back</a>

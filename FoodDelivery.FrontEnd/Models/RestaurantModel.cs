@@ -2,7 +2,7 @@
 
 namespace TFoodDelivery.FrontEnd.Models
 {
-    public class Restaurant
+    public class RestaurantModel
     {
         public int RestaurantId { get; set; }
         public string? RestaurantName { get; set; }
