@@ -10,9 +10,8 @@ namespace FoodDelivery.FrontEnd.Pages.Restaurants
         private readonly IRestaurantServices _restaurant;
 
         public RestaurantModel Restaurant;
-        public int Id { get; set; }
+       
 
-        
 
         public ViewModel(IRestaurantServices restaurant)
         {

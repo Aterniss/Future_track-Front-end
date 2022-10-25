@@ -1,0 +1,48 @@
+﻿@page
+@model FoodDelivery.FrontEnd.Pages.Admin.Users.IndexModel
+@{
+}
+<h3>Users:</h3>
+<table class="table">
+  <thead class="thead-dark">
+     <tr>
+        <th scope="col">#</th>
+        <th scope="col">User ID</th>
+        <th scope="col">Full name</th>
+        <th scope="col">Created at</th>
+        <th scope="col">Last update</th>
+        <th scope="col">User address</th>
+        <th scope="col">Is over 18?</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+     </tr>
+  </thead>
+@{
+    int i = 1;
+    if(Model.Users != null){
+    foreach(var item in Model.Users){
+        
+        
+                            <tbody>
+                          <tr>
+                          
+                            <th scope="row">@i</th>
+                            <td>@item.IdUser</td>
+                            <td>@item.FullName</td>
+                            <td>@item.CreatedAt</td>
+                            <td>@item.LastUpdate</td>
+                            <td>@item.UserAddress</td>
+                            <td>@item.IsOver18</td>
+                            <td style="border: 1px solid yellow; background-color:lightgoldenrodyellow">
+                            <a asp-page="/Admin/Users/Update" asp-route-id="@item.IdUser" style="text-decoration:none; color:green;">
+                              Update</a></td>
+                            <td style="border:1px solid red; background-color:palevioletred">
+                            <a asp-page="/Admin/Users/Delete" asp-route-id="@item.IdUser" style="text-decoration:none; color:black;">
+                            Delete</a></td>
+                          </tr>
+                            </tbody>
+        i += 1;
+    }
+   }
+}
+</table>

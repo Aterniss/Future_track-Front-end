@@ -9,8 +9,8 @@ namespace FoodDelivery.FrontEnd.Pages.Restaurants
     {
         private readonly IRestaurantServices _restaurant;
 
-        public IEnumerable<RestaurantModel> Restaurants;
-        public RestaurantModel Restaurant;
+        public IEnumerable<RestaurantModel>? Restaurants;
+        public RestaurantModel? Restaurant;
 
         public IndexModel(IRestaurantServices restaurant)
         {

@@ -12,6 +12,7 @@ builder.Services.AddMvc();
 builder.Services.AddSingleton<IOrderService, OrderService>();
 builder.Services.AddSingleton<IRestaurantServices, RestaurantServices>();
 builder.Services.AddSingleton<IAccountService, AccountService>();
+builder.Services.AddSingleton<IUserService, UserService>();
 
 var app = builder.Build();
 

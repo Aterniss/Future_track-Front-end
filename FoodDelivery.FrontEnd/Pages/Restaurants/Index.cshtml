@@ -19,23 +19,24 @@
   </thead>
 @{
     int i = 1;
-
+    if(Model.Restaurants != null){
     foreach(var item in Model.Restaurants){
         
         
-            <tbody>
-          <tr>
-          
-            <th scope="row">@i</th>
-            <td>
-            <a asp-page="/Restaurants/View" asp-route-id="@item.RestaurantId">
-            @item.RestaurantName</a>
-            </td>
-            <td>@item.CategoryName</td>
-            <td>@item.CategoryNameNavigation.CategoryDescription</td>
-          </tr>
-            </tbody>
-        i += 1;
+                    <tbody>
+                  <tr>
+                  
+                    <th scope="row">@i</th>
+                    <td>
+                    <a asp-page="/Restaurants/View" asp-route-id="@item.RestaurantId" style="text-decoration:none; color:black;">
+                    @item.RestaurantName</a>
+                    </td>
+                    <td>@item.CategoryName</td>
+                    <td>@item.CategoryNameNavigation.CategoryDescription</td>
+                  </tr>
+                    </tbody>
+            i += 1;
+        }
+       }
     }
-}
-</table>
+    </table>
