@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetString("Admin") != null || Context.Session.GetString("Customer") != null || Context.Session.GetString("Restaurant") != null)
+    {
+        ViewData["Status"] = "Logout";
+    }
+    else
+    {
+        ViewData["Status"] = "Login";
+    }
+
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,8 +40,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Restaurants/Index">Restaurants</a>
                         </li>
+                        @if(Context.Session.GetString("Admin") != null)
+                        {
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">My Account</a>
+                         </li>
+                        }
+                        @if(Context.Session.GetString("Customer") != null)
+                        {
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Customer/Index">My Account</a>
+                         </li>
+                        }
+                        @if(Context.Session.GetString("Restaurant") != null)
+                        {
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Restaurant/Index">My Account</a>
+                         </li>
+                        }
                     </ul>
-                       <a class="btn btn-primary" asp-area="" asp-page="/Login">Login</a>
+                       <a class="btn btn-primary" asp-area="" asp-page="/@ViewData["Status"]">@ViewData["Status"]</a>
                         
                 </div>
             </div>

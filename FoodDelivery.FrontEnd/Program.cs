@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
+builder.Services.AddMemoryCache();
+builder.Services.AddMvc();
 builder.Services.AddSingleton<IOrderService, OrderService>();
 builder.Services.AddSingleton<IRestaurantServices, RestaurantServices>();
 builder.Services.AddSingleton<IAccountService, AccountService>();

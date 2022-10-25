@@ -8,8 +8,9 @@ namespace FoodDelivery.FrontEnd.Pages
     public class LoginModel : PageModel
     {
         private readonly IAccountService _account;
-        public Account Account { get; set; }
-        public string Message { get; set; }
+
+        public Account? Account { get; set; }
+        public string? Message { get; set; }
 
 
         public LoginModel(IAccountService account)
@@ -29,16 +30,20 @@ namespace FoodDelivery.FrontEnd.Pages
                 return Page();
             }
             Account = result;
+            
             if (result.Role == 1)
             {
+                HttpContext.Session.SetObject("Customer", result);
                 return Redirect("/Customer");
             }
             else if(result.Role == 2)
             {
-                return Redirect("/Privacy");
+                HttpContext.Session.SetObject("Restaurant", result);
+                return Redirect("/Restaurant");
             }
             else if (result.Role == 3)
             {
+                HttpContext.Session.SetObject("Admin", result);
                 return Redirect("/Admin");
             }
             else
