@@ -2,9 +2,9 @@ using FoodDelivery.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FoodDelivery.FrontEnd.Pages.Admin
+namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
 {
-    public class DishesModel : PageModel
+    public class IndexModel : PageModel
     {
         public Account? Account { get; set; }
 

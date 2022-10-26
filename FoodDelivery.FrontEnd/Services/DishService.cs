@@ -1,14 +1,13 @@
-﻿using System.Text;
+﻿using FoodDelivery.FrontEnd.Models;
+using System.Text;
 using System.Text.Json;
-using TFoodDelivery.FrontEnd.Models;
 
 namespace FoodDelivery.FrontEnd.Services
 {
-    public class UserService : IUserService
+    public class DishService : IDishService
     {
         private static readonly HttpClient client;
-
-        static UserService()
+        static DishService()
         {
             client = new HttpClient()
             {
@@ -16,28 +15,28 @@ namespace FoodDelivery.FrontEnd.Services
             };
         }
 
-        public async Task Add(User user)
+
+        public async Task Add(Dish dish)
         {
             try
             {
-                var url = string.Format($"/users/");
-                var userString = JsonSerializer.Serialize(user);
+                var url = string.Format($"/dishes/");
+                var userString = JsonSerializer.Serialize(dish);
                 var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(url, requestContent);
                 response.EnsureSuccessStatusCode();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
-           
         }
 
         public async Task Delete(int id)
         {
             try
             {
-                var url = string.Format($"/users/{id}");
+                var url = string.Format($"/dishes/{id}");
                 var response = await client.DeleteAsync(url);
                 response.EnsureSuccessStatusCode();
             }
@@ -49,20 +48,19 @@ namespace FoodDelivery.FrontEnd.Services
             {
                 throw new Exception(e.Message);
             }
-
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<Dish>> GetAll()
         {
-            var url = string.Format($"users");
-            var result = new List<User>();
+            var url = string.Format($"/dishes");
+            var result = new List<Dish>();
             var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
 
                 var stringResponse = await response.Content.ReadAsStringAsync();
 
-                result = System.Text.Json.JsonSerializer.Deserialize<List<User>>(stringResponse,
+                result = System.Text.Json.JsonSerializer.Deserialize<List<Dish>>(stringResponse,
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             }
             else
@@ -73,60 +71,33 @@ namespace FoodDelivery.FrontEnd.Services
             return result;
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<Dish> GetById(int id)
         {
-            var url = string.Format($"/users/{id}");
-            var result = new User();
+            var url = string.Format($"/dishes/{id}");
+            var result = new Dish();
             var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
 
                 var stringResponse = await response.Content.ReadAsStringAsync();
 
-                result = System.Text.Json.JsonSerializer.Deserialize<User>(stringResponse,
+                result = System.Text.Json.JsonSerializer.Deserialize<Dish>(stringResponse,
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 return result;
             }
             else
             {
                 throw new HttpRequestException(response.ReasonPhrase);
-                
-            }
 
-            
+            }
         }
 
-        public async Task<User> GetByName(string name)
-        {
-            var url = string.Format($"/users/get-by-name/{name}");
-            var result = new User();
-            var response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
-            {
-
-                var stringResponse = await response.Content.ReadAsStringAsync();
-
-                result = System.Text.Json.JsonSerializer.Deserialize<User>(stringResponse,
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                return result;
-            }
-            else
-            {
-                throw new HttpRequestException(response.ReasonPhrase);
-            }
-
-            
-        }
-
-        public async Task Update(User user, int id)
+        public async Task Update(Dish dish, int id)
         {
             try
             {
-                var url = string.Format($"/users/{id}");
-                var userString = JsonSerializer.Serialize(user);
-                var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
-                var response = await client.PutAsync(url, requestContent);
-                response.EnsureSuccessStatusCode();
+                var url = string.Format($"/dishes/{id}");
+                await client.GetAsync(url);
             }
             catch (HttpRequestException ex)
             {
@@ -136,7 +107,6 @@ namespace FoodDelivery.FrontEnd.Services
             {
                 throw new Exception(e.Message);
             }
-
         }
     }
 }
