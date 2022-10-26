@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using TFoodDelivery.FrontEnd.Models;
 
 namespace FoodDelivery.FrontEnd.Services
@@ -20,11 +21,10 @@ namespace FoodDelivery.FrontEnd.Services
             try
             {
                 var url = string.Format($"/users/");
-                await client.GetAsync(url);
-            }
-            catch(HttpRequestException ex)
-            {
-                throw new HttpRequestException(ex.Message);
+                var userString = JsonSerializer.Serialize(user);
+                var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(url, requestContent);
+                response.EnsureSuccessStatusCode();
             }
             catch(Exception e)
             {
