@@ -1,6 +1,7 @@
 
 
 using FoodDelivery.FrontEnd.Services;
+using Microsoft.AspNetCore.HttpLogging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddSingleton<IRestaurantServices, RestaurantServices>();
 builder.Services.AddSingleton<IAccountService, AccountService>();
 builder.Services.AddSingleton<IDishService, DishService>();
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IFoodCategoryService, FoodCategoryService>();
+builder.Services.AddSingleton<IZoneService, ZoneService>();
+
 
 var app = builder.Build();
 
@@ -33,5 +37,4 @@ app.UseSession();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
 app.Run();

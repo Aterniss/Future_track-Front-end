@@ -1,4 +1,50 @@
-﻿@page
+﻿@page "{id}"
 @model FoodDelivery.FrontEnd.Pages.Admin.Dishes.UpdateModel
 @{
+}
+<h3>Update Dish:</h3>
+<br />
+
+<a class="btn btn-primary" asp-page="/Admin/Dishes/Index">Back</a>
+<br />
+<br />
+<form method="post">
+  <div class="form-group">
+    <label for="DishName">Dish name</label>
+    <input type="text" class="form-control" id="DishName" name="DishName" value="@Model.Dish.DishName" required >
+  </div>
+  <div class="form-group">
+    <label for="DishDescription">Dish description</label>
+    <input type="text" class="form-control" id="DishDescription" name="DishDescription" value="@Model.Dish.DishDescription" required>
+  </div>
+  <div class="form-group">
+    <label for="RestaurantId">Restaurant ID</label>
+    <input type="number" class="form-control" id="RestaurantId" name="RestaurantId" value="@Model.Dish.RestaurantId" required>
+  </div>
+  <div class="form-group">
+    <label for="Price">Price</label>  
+    <input type="number" step="0.01" class="form-control" id="Price" name="Price" placeholder="@Model.Dish.Price" required>
+  </div>
+  <br />
+   <div class="form-group">
+    <label for="Require18">Require 18?</label>
+        @{
+            if(@Model.Dish.Require18 == true)
+            {
+                    <input type="checkbox" id="Require18" name="Require18" value="true" checked>
+            }
+            else
+            {
+                  <input type="checkbox" id="Require18" name="Require18" value="true">  
+            }
+        }
+  </div>
+  <br />
+  <input type="submit" value="Submit"  class="btn btn-success" asp-page-handler="Submit">
+</form>
+@{
+    if(@Model.Message != null)
+    {
+    <p style="color:red">@Model.Message</p>
+    }
 }

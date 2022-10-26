@@ -3,19 +3,18 @@ using FoodDelivery.FrontEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
+namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
 {
     public class IndexModel : PageModel
     {
-        private readonly IDishService _dish;
-        public IEnumerable<Dish>? Dishes { get; set; }
-        public Dish? OneDish { get; set; }
+        private readonly IFoodCategoryService _category;
+        public IEnumerable<FoodCategory> Categories { get; set; }
         public Account? Account { get; set; }
+       
 
-
-        public IndexModel(IDishService dish)
+        public IndexModel(IFoodCategoryService category)
         {
-            this._dish = dish;
+            this._category = category;
         }
 
 
@@ -27,8 +26,8 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
             {
                 return Redirect("/Index");
             }
-            var result = await _dish.GetAll();
-            Dishes = result;
+            var result = await _category.GetAll();
+            Categories = result;
             Account = check;
             return Page();
 

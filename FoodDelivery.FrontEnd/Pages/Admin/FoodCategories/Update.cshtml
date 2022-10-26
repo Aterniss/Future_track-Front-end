@@ -1,0 +1,28 @@
+﻿@page "{name}"
+@model FoodDelivery.FrontEnd.Pages.Admin.FoodCategories.UpdateModel
+@{
+}
+<h3>Update food category:</h3>
+<br />
+
+<a class="btn btn-primary" asp-page="/Admin/FoodCategories/Index">Back</a>
+<br />
+<br />
+<form method="post">
+  <div class="form-group">
+    <label for="CategoryName">Category name</label>
+    <input type="text" class="form-control" id="CategoryName" name="CategoryName" value="@Model.Category.CategoryName" disabled>
+  </div>
+  <div class="form-group">
+    <label for="CategoryDescription">Category description</label>
+    <input type="text" class="form-control" id="CategoryDescription" name="CategoryDescription" value="@Model.Category.CategoryDescription" required>
+  </div>
+  <br />
+  <input type="submit" value="Submit"  class="btn btn-success" asp-page-handler="Submit">
+</form>
+@{
+    if(@Model.Message != null)
+    {
+    <p style="color:red">@Model.Message</p>
+    }
+}

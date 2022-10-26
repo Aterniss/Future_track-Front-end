@@ -18,38 +18,28 @@ namespace FoodDelivery.FrontEnd.Services
 
         public async Task Add(User user)
         {
-            try
+            var url = string.Format($"/users/");
+            var userString = JsonSerializer.Serialize(user);
+            var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(url, requestContent);
+            var msg = response.Content.ReadAsStringAsync();
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode == false)
             {
-                var url = string.Format($"/users/");
-                var userString = JsonSerializer.Serialize(user);
-                var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(url, requestContent);
-                response.EnsureSuccessStatusCode();
+                throw new Exception(msg.Result);
             }
-            catch(Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-           
         }
 
         public async Task Delete(int id)
         {
-            try
+            var url = string.Format($"/users/{id}");
+            var response = await client.DeleteAsync(url);
+            var msg = response.Content.ReadAsStringAsync();
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode == false)
             {
-                var url = string.Format($"/users/{id}");
-                var response = await client.DeleteAsync(url);
-                response.EnsureSuccessStatusCode();
+                throw new Exception(msg.Result);
             }
-            catch (HttpRequestException ex)
-            {
-                throw new HttpRequestException(ex.Message);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-
         }
 
         public async Task<IEnumerable<User>> GetAll()
@@ -64,13 +54,13 @@ namespace FoodDelivery.FrontEnd.Services
 
                 result = System.Text.Json.JsonSerializer.Deserialize<List<User>>(stringResponse,
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                return result;
             }
             else
             {
-                throw new HttpRequestException(response.ReasonPhrase);
-            }
-
-            return result;
+                var msg = response.Content.ReadAsStringAsync();
+                throw new Exception(msg.Result);
+            } 
         }
 
         public async Task<User> GetById(int id)
@@ -89,8 +79,8 @@ namespace FoodDelivery.FrontEnd.Services
             }
             else
             {
-                throw new HttpRequestException(response.ReasonPhrase);
-                
+                var msg = response.Content.ReadAsStringAsync();
+                throw new Exception(msg.Result);
             }
 
             
@@ -112,7 +102,8 @@ namespace FoodDelivery.FrontEnd.Services
             }
             else
             {
-                throw new HttpRequestException(response.ReasonPhrase);
+                var msg = response.Content.ReadAsStringAsync();
+                throw new Exception(msg.Result);
             }
 
             
@@ -120,21 +111,15 @@ namespace FoodDelivery.FrontEnd.Services
 
         public async Task Update(User user, int id)
         {
-            try
+            var url = string.Format($"/users/{id}");
+            var userString = JsonSerializer.Serialize(user);
+            var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
+            var response = await client.PutAsync(url, requestContent);
+            var msg = response.Content.ReadAsStringAsync();
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode == false)
             {
-                var url = string.Format($"/users/{id}");
-                var userString = JsonSerializer.Serialize(user);
-                var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
-                var response = await client.PutAsync(url, requestContent);
-                response.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException ex)
-            {
-                throw new HttpRequestException(ex.Message);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
+                throw new Exception(msg.Result);
             }
 
         }

@@ -1,9 +1,9 @@
 ﻿@page
-@model FoodDelivery.FrontEnd.Pages.Admin.Dishes.DeleteModel
+@model FoodDelivery.FrontEnd.Pages.Admin.FoodCategories.DeleteModel
 @{
 }
 <h3>Are you sure that you want to delete?</h3><br /><br />
 <form method="post">
 <input class="btn btn-primary" value="Back" type="submit" asp-page-handler="Back">
-<input class="btn btn-success" value="Delete" type="submit" asp-page-handler="Delete" asp-route-id="@Model.Id">
+<input class="btn btn-success" value="Delete" type="submit" asp-page-handler="Delete" asp-route-name="@Model.Name">
 </form>

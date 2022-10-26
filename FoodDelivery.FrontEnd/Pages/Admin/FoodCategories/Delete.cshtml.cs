@@ -3,21 +3,21 @@ using FoodDelivery.FrontEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FoodDelivery.FrontEnd.Pages.Admin.Users
+namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
 {
     public class DeleteModel : PageModel
     {
-        private readonly IUserService _user;
-        public int Id { get; set; }
+        private readonly IFoodCategoryService _category;
+        public string Name { get; set; }
 
-        public DeleteModel(IUserService user)
+        public DeleteModel(IFoodCategoryService category)
         {
-            this._user = user;
+            this._category = category;
         }
 
         public Account? Account { get; set; }
 
-        public IActionResult OnGetAsync(int id)
+        public IActionResult OnGetAsync(string name)
         {
 
             var check = HttpContext.Session.GetObject<Account>("Admin");
@@ -25,20 +25,18 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
             {
                 return Redirect("/Index");
             }
-            Id = id;
-           
+            Name = name;
             return Page();
         }
         public IActionResult OnPostBack()
         {
-            return Redirect("/Admin/Users");
+            return Redirect("/Admin/FoodCategories");
         }
-        public async Task<IActionResult> OnPostDelete(int id)
+        public async Task<IActionResult> OnPostDelete(string name)
         {
-            await _user.Delete(id);
-            return Redirect("/Admin/Users");
+            await _category.Delete(name);
+            return Redirect("/Admin/FoodCategories");
 
         }
-        
     }
 }
