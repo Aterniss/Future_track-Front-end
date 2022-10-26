@@ -97,7 +97,10 @@ namespace FoodDelivery.FrontEnd.Services
             try
             {
                 var url = string.Format($"/dishes/{id}");
-                await client.GetAsync(url);
+                var userString = JsonSerializer.Serialize(dish);
+                var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
+                var response = await client.PutAsync(url, requestContent);
+                response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException ex)
             {
