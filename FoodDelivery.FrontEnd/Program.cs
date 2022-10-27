@@ -17,6 +17,7 @@ builder.Services.AddSingleton<IDishService, DishService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IFoodCategoryService, FoodCategoryService>();
 builder.Services.AddSingleton<IZoneService, ZoneService>();
+builder.Services.AddSingleton<IRiderService, RiderService>();
 
 
 var app = builder.Build();

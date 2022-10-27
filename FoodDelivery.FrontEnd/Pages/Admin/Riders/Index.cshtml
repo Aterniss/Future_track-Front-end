@@ -2,3 +2,42 @@
 @model FoodDelivery.FrontEnd.Pages.Admin.Riders.IndexModel
 @{
 }
+<h3>Riders:</h3>
+<a class="btn btn-primary" asp-page="/Admin/Index">Back</a>
+<a class="btn btn-success" asp-page="/Admin/Riders/Add">Add new Rider</a>
+<br />
+<br />
+<table class="table">
+  <thead class="thead-dark">
+     <tr>
+        <th scope="col">#</th>
+        <th scope="col">Rider ID</th>
+        <th scope="col">Rider name</th>
+        <th scope="col">Zone ID</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+     </tr>
+  </thead>
+  @{
+    int i = 1;
+    if(Model.Riders != null){
+    foreach(var item in Model.Riders){
+      <tbody>
+        <tr>
+           <th scope="row">@i</th>
+           <td>@item.RiderId</td>
+           <td>@item.RiderName</td>
+           <td>@item.ZoneId</td>
+           <td style="border: 1px solid yellow; background-color:lightgoldenrodyellow">
+           <a asp-page="/Admin/Riders/Update" asp-route-id="@item.RiderId" asp-route-name="@item.RiderName" asp-route-zone="@item.ZoneId" style="text-decoration:none; color:green;">
+           Update</a></td>
+           <td style="border:1px solid red; background-color:palevioletred">
+           <a asp-page="/Admin/Riders/Delete" asp-route-id="@item.RiderId" style="text-decoration:none; color:black;">
+            Delete</a></td>
+           </tr>
+           </tbody>
+        i += 1;
+    }
+   }
+}
+</table>

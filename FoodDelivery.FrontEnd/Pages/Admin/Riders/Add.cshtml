@@ -1,0 +1,29 @@
+﻿@page
+@model FoodDelivery.FrontEnd.Pages.Admin.Riders.AddModel
+@{
+}
+<h3>Add new rider:</h3>
+<br />
+
+<a class="btn btn-primary" asp-page="/Admin/Riders/Index">Back</a>
+<br />
+<br />
+
+<form method="post">
+  <div class="form-group">
+    <label for="RiderName">Rider name</label>
+    <input type="text" class="form-control" id="RiderName" name="RiderName" placeholder="Enter rider name" required >
+  </div>
+  <div class="form-group">
+    <label for="ZoneId">Zone ID</label>
+    <input type="number" class="form-control" id="ZoneId" name="ZoneId" placeholder="1" required>
+  </div>
+  <br />
+  <input type="submit" value="Submit"  class="btn btn-success" asp-page-handler="Submit">
+</form>
+@{
+    if(@Model.Message != null)
+    {
+    <p style="color:red">@Model.Message</p>
+    }
+}

@@ -60,7 +60,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
                 };
                 await _dish.Update(dish, id);
                 Message = $"Succesfully updated!";
-                return Redirect("/Admin/FoodCategories");
+                return Redirect("/Admin/Dishes");
             }
             catch (Exception ex)
             {
