@@ -44,6 +44,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
                     Price = request.Price / 100,
                     Require18 = request.Require18,
                     RestaurantId = request.RestaurantId,
+                    //Dishes need to added
                 };
                 await _dish.Add(dish);
                 Message = $"Succesfully added!";
