@@ -4,7 +4,7 @@
 }
 <h3>Dishes:</h3>
 <a class="btn btn-primary" asp-page="/RestaurantAdmin/Index">Back</a>
-<a class="btn btn-success" asp-page="/RestaurantAdmin/Dishes/Add">Add new dish</a>
+<a class="btn btn-success" asp-route-restaurant="@Model.RestaurantId" asp-page="/RestaurantAdmin/Dishes/Add">Add new dish</a>
 <table class="table">
   <thead class="thead-dark">
      <tr>

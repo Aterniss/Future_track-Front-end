@@ -4,28 +4,26 @@ using FoodDelivery.FrontEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
+namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Dishes
 {
     public class AddModel : PageModel
     {
         private readonly IDishService _dish;
-        public Account? Account { get; set; }
-        public DishRequest? Request { get; set; }
         public string Message { get; set; }
 
         public AddModel(IDishService dish)
         {
             this._dish = dish;
         }
-        public IActionResult OnGet()
+        public IActionResult OnGet(int restaurant)
         {
 
-            var check = HttpContext.Session.GetObject<Account>("Admin");
+            var check = HttpContext.Session.GetObject<Account>("Restaurant");
             if (check == null)
             {
                 return Redirect("/Index");
             }
-            Account = check;
+         
             return Page();
 
         }
@@ -44,7 +42,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
                     Price = request.Price / 100,
                     Require18 = request.Require18,
                     RestaurantId = restaurant
-        
+                    
                 };
                 await _dish.Add(dish);
                 Message = $"Succesfully added!";
