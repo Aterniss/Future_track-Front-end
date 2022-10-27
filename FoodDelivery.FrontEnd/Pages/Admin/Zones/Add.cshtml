@@ -1,0 +1,25 @@
+﻿@page
+@model FoodDelivery.FrontEnd.Pages.Admin.Zones.AddModel
+@{
+}
+<h3>Add new zone:</h3>
+<br />
+
+<a class="btn btn-primary" asp-page="/Admin/Zones/Index">Back</a>
+<br />
+<br />
+
+<form method="post">
+  <div class="form-group">
+    <label for="ZoneName">Zone name</label>
+    <input type="text" class="form-control" id="ZoneName" name="ZoneName" placeholder="Enter zone name" required >
+  </div>
+  <br />
+  <input type="submit" value="Submit"  class="btn btn-success" asp-page-handler="Submit">
+</form>
+@{
+    if(@Model.Message != null)
+    {
+    <p style="color:red">@Model.Message</p>
+    }
+}
