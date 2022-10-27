@@ -9,6 +9,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
     {
         private readonly IFoodCategoryService _category;
         public string Name { get; set; }
+        public string Message { get; set; }
 
         public DeleteModel(IFoodCategoryService category)
         {
@@ -33,10 +34,18 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
             return Redirect("/Admin/FoodCategories");
         }
         public async Task<IActionResult> OnPostDelete(string name)
-        {
-            await _category.Delete(name);
-            return Redirect("/Admin/FoodCategories");
-
-        }
+            {
+                try
+                {
+                    await _category.Delete(name);
+                    return Redirect("/Admin/FoodCategories");
+                }
+                catch (Exception e)
+                {
+                    Message = e.Message;
+                    return Page();
+                }
+          }
     }
 }
+

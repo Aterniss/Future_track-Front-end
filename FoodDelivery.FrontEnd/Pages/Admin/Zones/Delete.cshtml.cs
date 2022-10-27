@@ -9,6 +9,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Zones
     {
         private readonly IZoneService _zone;
         public int Id { get; set; }
+        public string Message { get; set; }
 
         public DeleteModel(IZoneService zone)
         {
@@ -31,12 +32,20 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Zones
         }
         public IActionResult OnPostBack()
         {
-            return Redirect("/Admin/Zones");
+            return Redirect("/Admin/Zones/Index");
         }
         public async Task<IActionResult> OnPostDelete(int id)
         {
-            await _zone.Delete(id);
-            return Redirect("/Admin/Zones");
+            try
+            {
+                await _zone.Delete(id);
+                return Redirect("/Admin/Zones/Index");
+            }
+            catch (Exception e)
+            {
+                Message = e.Message;
+                return Page();
+            }
 
         }
     }

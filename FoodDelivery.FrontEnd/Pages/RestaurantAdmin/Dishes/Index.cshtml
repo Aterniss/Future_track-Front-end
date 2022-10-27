@@ -1,0 +1,43 @@
+﻿@page
+@model FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Dishes.IndexModel
+@{
+}
+<h3>Dishes:</h3>
+<a class="btn btn-primary" asp-page="/RestaurantAdmin/Index">Back</a>
+<a class="btn btn-success" asp-page="/RestaurantAdmin/Dishes/Add">Add new dish</a>
+<table class="table">
+  <thead class="thead-dark">
+     <tr>
+        <th scope="col">#</th>
+        <th scope="col">Dish name</th>
+        <th scope="col">Dish description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Require 18?</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+     </tr>
+  </thead>
+  @{
+    int i = 1;
+    if(Model.Dishes != null){
+    foreach(var item in Model.Dishes){
+      <tbody>
+        <tr>
+           <th scope="row">@i</th>
+           <td>@item.DishName</td>
+           <td>@item.DishDescription</td>
+           <td>@item.Price</td>
+           <td>@item.Require18</td>
+           <td style="border: 1px solid yellow; background-color:lightgoldenrodyellow">
+           <a asp-page="/RestaurantAdmin/Dishes/Update" asp-route-id="@item.DishId" asp-route-name="@item.DishName" asp-route-desc="@item.DishDescription" asp-route-restaurant="@item.RestaurantId" asp-route-price="@item.Price" asp-route-require="@item.Require18" style="text-decoration:none; color:green;">
+           Update</a></td>
+           <td style="border:1px solid red; background-color:palevioletred">
+           <a asp-page="/RestaurantAdmin/Dishes/Delete" asp-route-id="@item.DishId" asp-route-restaurant="@Model.RestaurantId" style="text-decoration:none; color:black;">
+            Delete</a></td>
+           </tr>
+           </tbody>
+        i += 1;
+    }
+   }
+}
+</table>

@@ -10,6 +10,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin
         private readonly IAccountService _account;
         public Account? Account { get; set; }
         public string? Name { get; set; }
+        public DateTime Date { get; set; }
 
         public IndexModel(IAccountService account)
         {
@@ -24,6 +25,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin
                 return Redirect("/Index");
             }
             Account = check;
+            Date = DateTime.Now;
             return Page();
 
         }

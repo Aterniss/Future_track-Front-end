@@ -70,6 +70,28 @@ namespace FoodDelivery.FrontEnd.Services
             
         }
 
+        public async Task<IEnumerable<Dish>> GetAllId(int restaurantId)
+        {
+            var url = string.Format($"/dishes/restaurant/{restaurantId}");
+            var result = new List<Dish>();
+            var response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+
+                var stringResponse = await response.Content.ReadAsStringAsync();
+
+                result = System.Text.Json.JsonSerializer.Deserialize<List<Dish>>(stringResponse,
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                return result;
+            }
+            else
+            {
+                var msg = response.Content.ReadAsStringAsync();
+
+                throw new Exception(msg.Result);
+            }
+        }
+
         public async Task<Dish> GetById(int id)
         {
             var url = string.Format($"/dishes/{id}");

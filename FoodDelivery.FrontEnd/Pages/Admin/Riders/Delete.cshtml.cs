@@ -31,14 +31,14 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
         }
         public IActionResult OnPostBack()
         {
-            return Redirect("/Admin/Riders");
+            return Redirect("/Admin/Riders/Index");
         }
         public async Task<IActionResult> OnPostDelete(int id)
         {
             try
             {
                 await _rider.Delete(id);
-                return Redirect("/Admin/Riders");
+                return Redirect("/Admin/Riders/Index");
             }
             catch(Exception e)
             {

@@ -9,6 +9,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Orders
     {
         private readonly IOrderService _order;
         public int Id { get; set; }
+        public string Message { get; set; }
 
         public DeleteModel(IOrderService order)
         {
@@ -30,12 +31,20 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Orders
         }
         public IActionResult OnPostBack()
         {
-            return Redirect("/Admin/Orders");
+            return Redirect("/Admin/Orders/Index");
         }
         public async Task<IActionResult> OnPostDelete(int id)
         {
-            await _order.Delete(id);
-            return Redirect("/Admin/Orders");
+            try
+            {
+                await _order.Delete(id);
+                return Redirect("/Admin/Orders/Index");
+            }
+            catch (Exception e)
+            {
+                Message = e.Message;
+                return Page();
+            }
 
         }
     }

@@ -9,7 +9,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
     {
         private readonly IDishService _dish;
         public int Id { get; set; }
-
+        public string Message { get; set; }
         public DeleteModel(IDishService dish)
         {
             this._dish = dish;
@@ -30,12 +30,20 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
         }
         public IActionResult OnPostBack()
         {
-            return Redirect("/Admin/Dishes");
+            return Redirect("/Admin/Dishes/Index");
         }
         public async Task<IActionResult> OnPostDelete(int id)
         {
-            await _dish.Delete(id);
-            return Redirect("/Admin/Dishes");
+            try
+            {
+                await _dish.Delete(id);
+                return Redirect("/Admin/Dishes/Index");
+            }
+            catch (Exception e)
+            {
+                Message = e.Message;
+                return Page();
+            }
 
         }
     }

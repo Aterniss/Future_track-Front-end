@@ -9,6 +9,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
     {
         private readonly IRestaurantServices _restaurant;
         public int Id { get; set; }
+        public string Message { get; set; }
 
         public DeleteModel(IRestaurantServices restaurant)
         {
@@ -34,8 +35,16 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
         }
         public async Task<IActionResult> OnPostDelete(int id)
         {
-            await _restaurant.Delete(id);
-            return Redirect("/Admin/Restaurants");
+            try
+            {
+                await _restaurant.Delete(id);
+                return Redirect("/Admin/Restaurants");
+            }
+            catch (Exception e)
+            {
+                Message = e.Message;
+                return Page();
+            }
 
         }
     }

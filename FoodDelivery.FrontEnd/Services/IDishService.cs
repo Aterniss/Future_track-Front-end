@@ -9,5 +9,6 @@ namespace FoodDelivery.FrontEnd.Services
         Task Add(Dish dish);
         Task Update(Dish dish, int id);
         Task Delete(int id);
+        Task<IEnumerable<Dish>> GetAllId(int restaurantId);
     }
 }

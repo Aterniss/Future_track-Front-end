@@ -9,6 +9,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
     {
         private readonly IUserService _user;
         public int Id { get; set; }
+        public string Message { get; set; }
 
         public DeleteModel(IUserService user)
         {
@@ -31,13 +32,20 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
         }
         public IActionResult OnPostBack()
         {
-            return Redirect("/Admin/Users");
+            return Redirect("/Admin/Users/Index");
         }
         public async Task<IActionResult> OnPostDelete(int id)
         {
-            await _user.Delete(id);
-            return Redirect("/Admin/Users");
-
+            try
+            {
+                await _user.Delete(id);
+                return Redirect("/Admin/Users/Index");
+            }
+            catch (Exception e)
+            {
+                Message = e.Message;
+                return Page();
+            }
         }
         
     }
