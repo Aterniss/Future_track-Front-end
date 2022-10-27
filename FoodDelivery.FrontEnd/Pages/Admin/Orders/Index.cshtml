@@ -12,7 +12,6 @@
         <th scope="col">Order status</th>
         <th scope="col">Created at</th>
         <th scope="col">More info</th>
-        <th scope="col">Update</th>
         <th scope="col">Delete</th>
      </tr>
   </thead>
@@ -28,8 +27,6 @@
              <td>@item.CreatedAt</td>
              <td style="border: 1px solid blue; background-color:lightblue">
              <a asp-page="/Admin/Orders/MoreInfo" asp-route-id="@item.OrderId" style="text-decoration:none; color:dimgrey;">View</a></td>
-             <td style="border: 1px solid yellow; background-color:lightgoldenrodyellow">
-             <a asp-page="/Admin/Orders/Update" asp-route-id="@item.OrderId" style="text-decoration:none; color:green;">Update</a></td>
              <td style="border:1px solid red; background-color:palevioletred">
              <a asp-page="/Admin/Orders/Delete" asp-route-id="@item.OrderId" style="text-decoration:none; color:black;">Delete</a></td>
              </tr>
