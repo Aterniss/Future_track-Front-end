@@ -12,15 +12,20 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
         public Account? Account { get; set; }
         public DishRequest? Request { get; set; }
         public int Id { get; set; }
-        public Dish Dish { get; set; }
+        public string DishName { get; set; }
+        public string DishDescription { get; set; }
+        public int RestaurantId { get; set; }
+        public Decimal Price { get; set; }
+        public bool Require18 { get; set; }
+
+
         public string Message { get; set; }
         public UpdateModel(IDishService dish)
         {
             this._dish = dish;
         }
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGetAsync(int id, string name, string desc, int restaurant, decimal price, bool require)
         {
-
             var check = HttpContext.Session.GetObject<Account>("Admin");
 
             if (check == null)
@@ -28,8 +33,12 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
                 return Redirect("/Index");
             }
             Account = check;
-            var dish = await _dish.GetById(id);
-            Dish = dish;
+            DishName = name;
+            DishDescription = desc;
+            RestaurantId = restaurant;
+            Price = price;
+            Require18 = require;
+
             Id = id;
             return Page();
         }

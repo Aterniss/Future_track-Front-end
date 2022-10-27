@@ -23,26 +23,23 @@
     int i = 1;
     if(Model.Dishes != null){
     foreach(var item in Model.Dishes){
-        
-        
-                            <tbody>
-                          <tr>
-                          
-                            <th scope="row">@i</th>
-                            <td>@item.DishId</td>
-                            <td>@item.DishName</td>
-                            <td>@item.DishDescription</td>
-                            <td>@item.RestaurantId</td>
-                            <td>@item.Price</td>
-                            <td>@item.Require18</td>
-                            <td style="border: 1px solid yellow; background-color:lightgoldenrodyellow">
-                            <a asp-page="/Admin/Dishes/Update" asp-route-id="@item.DishId" style="text-decoration:none; color:green;">
-                              Update</a></td>
-                            <td style="border:1px solid red; background-color:palevioletred">
-                            <a asp-page="/Admin/Dishes/Delete" asp-route-id="@item.DishId" style="text-decoration:none; color:black;">
-                            Delete</a></td>
-                          </tr>
-                            </tbody>
+      <tbody>
+        <tr>
+           <th scope="row">@i</th>
+           <td>@item.DishId</td>
+           <td>@item.DishName</td>
+           <td>@item.DishDescription</td>
+           <td>@item.RestaurantId</td>
+           <td>@item.Price</td>
+           <td>@item.Require18</td>
+           <td style="border: 1px solid yellow; background-color:lightgoldenrodyellow">
+           <a asp-page="/Admin/Dishes/Update" asp-route-id="@item.DishId" asp-route-name="@item.DishName" asp-route-desc="@item.DishDescription" asp-route-restaurant="@item.RestaurantId" asp-route-price="@item.Price" asp-route-require="@item.Require18" style="text-decoration:none; color:green;">
+           Update</a></td>
+           <td style="border:1px solid red; background-color:palevioletred">
+           <a asp-page="/Admin/Dishes/Delete" asp-route-id="@item.DishId" style="text-decoration:none; color:black;">
+            Delete</a></td>
+           </tr>
+           </tbody>
         i += 1;
     }
    }

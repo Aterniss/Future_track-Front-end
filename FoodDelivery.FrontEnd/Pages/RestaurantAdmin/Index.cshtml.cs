@@ -2,15 +2,14 @@ using FoodDelivery.FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FoodDelivery.FrontEnd.Pages.Admin
+namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin
 {
-    public class RestaurantsModel : PageModel
+    public class IndexModel : PageModel
     {
         public Account? Account { get; set; }
-
         public IActionResult OnGet()
         {
-            var check = HttpContext.Session.GetObject<Account>("Admin");
+            var check = HttpContext.Session.GetObject<Account>("Restaurant");
             if (check == null)
             {
                 return Redirect("/Index");

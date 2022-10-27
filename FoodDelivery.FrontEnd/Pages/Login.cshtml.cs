@@ -39,7 +39,7 @@ namespace FoodDelivery.FrontEnd.Pages
             else if(result.Role == 2)
             {
                 HttpContext.Session.SetObject("Restaurant", result);
-                return Redirect("/Restaurant");
+                return Redirect("/RestaurantAdmin");
             }
             else if (result.Role == 3)
             {

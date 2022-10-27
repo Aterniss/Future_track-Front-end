@@ -1,0 +1,49 @@
+﻿@page "{id}"
+@model FoodDelivery.FrontEnd.Pages.Admin.Restaurants.MoreInfoModel
+@{
+}
+<h1>More info:</h1>
+<a class="btn btn-primary" asp-page="/Admin/Restaurants/Index">Back</a>
+<br /><br />
+<h3>Information about restaurant:</h3>
+<p>Restaurant ID: @Model.OneRestaurant.RestaurantId</p>
+<p>Restaurant name: @Model.OneRestaurant.RestaurantName</p>
+<p>Category name: @Model.OneRestaurant.CategoryName</p>
+<p>Category description: @Model.OneRestaurant.CategoryNameNavigation.CategoryName</p>
+<p>Zone ID: @Model.OneRestaurant.ZoneId</p>
+<p>Zone name: @Model.OneRestaurant.Zone.ZoneName</p>
+<br />
+<br />
+<h3>Dishes:</h3>
+<table class="table">
+  <thead class="thead-dark">
+     <tr>
+        <th scope="col">#</th>
+        <th scope="col">Dish ID</th>
+        <th scope="col">Dish name</th>
+        <th scope="col">Dish description</th>
+        <th scope="col">Restaurant ID</th>
+        <th scope="col">Price</th>
+        <th scope="col">Require 18?</th>
+     </tr>
+  </thead>
+  @{
+    int i = 1;
+    if(Model.OneRestaurant.Dishes != null){
+    foreach(var item in Model.OneRestaurant.Dishes){
+       <tbody>
+           <tr>
+           <th scope="row">@i</th>
+           <td>@item.DishId</td>
+           <td>@item.DishName</td>
+           <td>@item.DishDescription</td>
+           <td>@item.RestaurantId</td>
+           <td>@item.Price</td>
+           <td>@item.Require18</td>
+           </tr>
+       </tbody>
+       i += 1;
+    }
+   }
+}
+</table>
