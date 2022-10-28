@@ -1,5 +1,4 @@
 ﻿using FoodDelivery.FrontEnd.Models;
-using Microsoft.AspNetCore.HttpLogging;
 using System.Text;
 using System.Text.Json;
 
@@ -7,16 +6,16 @@ namespace FoodDelivery.FrontEnd.Services
 {
     public class DishService : IDishService
     {
-        private static readonly HttpClient client;
-        static DishService()
+        private readonly HttpClient client;
+        private readonly IConfiguration _configuration;
+        public DishService(IConfiguration configuration)
         {
+            this._configuration = configuration;
             client = new HttpClient()
             {
-                BaseAddress = new Uri("https://localhost:7147/")
+                BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
         }
-
-
         public async Task Add(Dish dish)
         {
             var url = string.Format($"/dishes/");

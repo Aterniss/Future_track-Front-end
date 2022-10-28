@@ -6,13 +6,14 @@ namespace FoodDelivery.FrontEnd.Services
 {
     public class UserService : IUserService
     {
-        private static readonly HttpClient client;
-
-        static UserService()
+        private readonly HttpClient client;
+        private readonly IConfiguration _configuration;
+        public UserService(IConfiguration configuration)
         {
+            this._configuration = configuration;
             client = new HttpClient()
             {
-                BaseAddress = new Uri("https://localhost:7147/")
+                BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
         }
 

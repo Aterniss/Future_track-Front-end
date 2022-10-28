@@ -7,13 +7,14 @@ namespace FoodDelivery.FrontEnd.Services
 {
     public class OrderService : IOrderService
     {
-        private static readonly HttpClient client;
-
-        static OrderService()
+        private readonly HttpClient client;
+        private readonly IConfiguration _configuration;
+        public OrderService(IConfiguration configuration)
         {
+            this._configuration = configuration;
             client = new HttpClient()
             {
-                BaseAddress = new Uri("https://localhost:7147")
+                BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
         }
 

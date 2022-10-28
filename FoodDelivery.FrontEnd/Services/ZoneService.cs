@@ -6,12 +6,14 @@ namespace FoodDelivery.FrontEnd.Services
 {
     public class ZoneService : IZoneService
     {
-        private static readonly HttpClient client;
-        static ZoneService()
+        private readonly HttpClient client;
+        private readonly IConfiguration _configuration;
+        public ZoneService(IConfiguration configuration)
         {
+            this._configuration = configuration;
             client = new HttpClient()
             {
-                BaseAddress = new Uri("https://localhost:7147/")
+                BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
         }
         public async Task Add(Zone zone)

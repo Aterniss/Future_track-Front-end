@@ -6,13 +6,14 @@ namespace FoodDelivery.FrontEnd.Services
 {
     public class RestaurantServices : IRestaurantServices
     {
-        private static readonly HttpClient client;
-
-        static RestaurantServices()
+        private readonly HttpClient client;
+        private readonly IConfiguration _configuration;
+        public RestaurantServices(IConfiguration configuration)
         {
+            this._configuration = configuration;
             client = new HttpClient()
             {
-                BaseAddress = new Uri("https://localhost:7147/")
+                BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
         }
         public async Task<RestaurantModel> GetById(int id = 1)

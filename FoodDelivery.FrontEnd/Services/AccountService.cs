@@ -5,12 +5,14 @@ namespace FoodDelivery.FrontEnd.Services
 {
     public class AccountService : IAccountService
     {
-        private static readonly HttpClient _client;
-        static AccountService()
+        private readonly HttpClient client;
+        private readonly IConfiguration _configuration;
+        public AccountService(IConfiguration configuration)
         {
-            _client = new HttpClient()
+            this._configuration = configuration;
+            client = new HttpClient()
             {
-                BaseAddress = new Uri("https://localhost:7147")
+                BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
         }
 
