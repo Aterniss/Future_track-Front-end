@@ -1,11 +1,11 @@
 ﻿@page
-@model FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Dishes.DeleteModel
+@model FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Orders.DeleteModel
 @{
     if(Model.Message != null)
     {
         <h1 style="color:red">@Model.Message</h1>
         <br /><br />
-        <a class="btn btn-primary" asp-page="/RestaurantAdmin/Dishes/Index">Back</a>
+        <a class="btn btn-primary" asp-page="/RestaurantAdmin/Orders/Index">Back</a>
     }
     else
     {

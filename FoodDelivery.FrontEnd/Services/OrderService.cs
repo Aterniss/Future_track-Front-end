@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using FoodDelivery.FrontEnd.Models;
+using FoodDelivery.FrontEnd.Models.Requests;
 
 namespace FoodDelivery.FrontEnd.Services
 {
@@ -64,6 +65,28 @@ namespace FoodDelivery.FrontEnd.Services
             }
         }
 
+        public async Task<IEnumerable<Order>> GetAllId(int restaurantId)
+        {
+            var url = string.Format($"/orders/restaurant/{restaurantId}");
+            var result = new List<Order>();
+            var response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+
+                var stringResponse = await response.Content.ReadAsStringAsync();
+
+                result = System.Text.Json.JsonSerializer.Deserialize<List<Order>>(stringResponse,
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                return result;
+            }
+            else
+            {
+                var msg = response.Content.ReadAsStringAsync();
+
+                throw new Exception(msg.Result);
+            }
+        }
+
         public async Task<Order> GetById(int id)
         {
             var url = string.Format($"/orders/{id}");
@@ -87,7 +110,7 @@ namespace FoodDelivery.FrontEnd.Services
             }
         }
 
-        public async Task Update(Order order, int id)
+        public async Task Update(OrderUpdateRequest order, int id)
         {
             var url = string.Format($"/orders/{id}");
             var userString = JsonSerializer.Serialize(order);

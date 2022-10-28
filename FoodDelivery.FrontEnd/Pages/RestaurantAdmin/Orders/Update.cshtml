@@ -1,0 +1,32 @@
+﻿@page "{id}, {status}, {rider}, {user}"
+@model FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Orders.UpdateModel
+@{
+}
+<h3>Update Order:</h3>
+<br />
+
+<a class="btn btn-primary" asp-page="/RestaurantAdmin/Orders/Index">Back</a>
+<br />
+<br />
+<form method="post">
+  <div class="form-group">
+    <label for="OrderStatus">Order status</label>
+    <input type="text" class="form-control" id="OrderStatus" name="OrderStatus" value="@Model.Status" required >
+  </div>
+  <div class="form-group">
+    <label for="RiderId">Rider ID</label>
+    <input type="number" class="form-control" id="RiderId" name="RiderId" value="@Model.Rider" required>
+  </div>
+  <div class="form-group">
+    <label for="IdUser">User ID</label>  
+    <input type="number" class="form-control" id="IdUser" name="IdUser" value="@Model.User" required>
+  </div>
+  <br />
+  <input type="submit" value="Submit"  class="btn btn-success" asp-page-handler="Submit">
+</form>
+@{
+    if(@Model.Message != null)
+    {
+    <p style="color:red">@Model.Message</p>
+    }
+}

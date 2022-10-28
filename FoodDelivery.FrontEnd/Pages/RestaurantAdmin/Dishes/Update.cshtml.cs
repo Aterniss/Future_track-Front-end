@@ -51,7 +51,7 @@ namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Dishes
                 {
                     DishName = request.DishName,
                     DishDescription = request.DishDescription,
-                    Price = request.Price,
+                    Price = request.Price/ 100,
                     RestaurantId = restaurant,
                     Require18 = request.Require18
                 };

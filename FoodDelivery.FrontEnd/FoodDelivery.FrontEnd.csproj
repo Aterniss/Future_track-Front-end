@@ -10,9 +10,4 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\RestaurantAdmin\Riders\" />
-    <Folder Include="Pages\RestaurantAdmin\Orders\" />
-  </ItemGroup>
-
 </Project>

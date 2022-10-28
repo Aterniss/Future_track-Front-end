@@ -1,0 +1,83 @@
+﻿@page "{id}"
+@model FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Orders.MoreInfoModel
+@{
+}
+<h1>More info:</h1>
+<a class="btn btn-primary" asp-page="/RestaurantAdmin/Orders/Index">Back</a>
+<br /><br />
+<h3>Order information:</h3>
+<p>Order ID: @Model.OneOrder.OrderId</p>
+<p>Order status: @Model.OneOrder.OrderStatus</p>
+<p>Created at: @Model.OneOrder.CreatedAt</p>
+<p>Rider ID: @Model.OneOrder.OrderId</p>
+<p>User ID: @Model.OneOrder.IdUser</p>
+<br /><br />
+<h3>Information about Rider:</h3>
+<p>Rider ID: @Model.OneOrder.Rider.RiderId</p>
+<p>Rider name: @Model.OneOrder.Rider.RiderName</p>
+<p>Zone ID: @Model.OneOrder.Rider.ZoneId</p>
+<p>Zone name: @Model.OneOrder.Rider.Zone.ZoneName</p>
+<br /><br />
+<h3>Information about user:</h3>
+
+<p>User ID: @Model.OneOrder.IdUserNavigation.IdUser</p>
+<p>User full name: @Model.OneOrder.IdUserNavigation.FullName</p>
+<p>Created at: @Model.OneOrder.IdUserNavigation.UserAddress</p>
+<p>Last update: @Model.OneOrder.IdUserNavigation.UserAddress</p>
+@{
+    if(@Model.OneOrder.IdUserNavigation.IsOver18 == true)
+    {
+        <p>User ID: Yes</p>
+    }
+    else
+    {
+        <p>User ID: No</p>
+    }
+    decimal total = 0;
+}
+<p>User address: @Model.OneOrder.IdUserNavigation.UserAddress</p>
+<br /><br />
+<h3>Dishes in order:</h3>
+<table class="table">
+  <thead class="thead-dark">
+     <tr>
+        <th scope="col">#</th>
+        <th scope="col">Dish ID</th>
+        <th scope="col">Dish name</th>
+        <th scope="col">Dish description</th>
+        <th scope="col">Restaurant ID</th>
+        <th scope="col">Price</th>
+        <th scope="col">Require 18?</th>
+     </tr>
+  </thead>
+  @{
+    int i = 1;
+    if(Model.OneOrder.OrderDishes != null){
+    foreach(var item in Model.OneOrder.OrderDishes){
+       <tbody>
+       <tr>
+       <th scope="row">@i</th>
+       <td>@item.Dish.DishId</td>
+       <td>@item.Dish.DishName</td>
+       <td>@item.Dish.DishDescription</td>
+       <td>@item.Dish.RestaurantId</td>
+       <td>@item.Dish.Price</td>
+                        @{
+                            if(@item.Dish.Require18 == true)
+                            {
+                                <td>Yes</td>
+                            }
+                            else
+                            {
+                               <td>No</td>  
+                            }
+                        }
+       </tr>
+                </tbody>
+                i += 1;
+                total += item.Dish.Price;
+            }
+   }
+}
+</table>
+<h4>TOTAL: @total</h4>
