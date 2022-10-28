@@ -2,3 +2,28 @@
 @model FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Riders.IndexModel
 @{
 }
+<h3>Our Riders:</h3>
+<a class="btn btn-primary" asp-page="/RestaurantAdmin/Index">Back</a>
+<table class="table">
+  <thead class="thead-dark">
+     <tr>
+        <th scope="col">#</th>
+        <th scope="col">Rider ID</th>
+        <th scope="col">Rider name</th>
+     </tr>
+  </thead>
+  @{
+    int i = 1;
+    if(Model.Riders != null){
+    foreach(var item in Model.Riders){
+        <tbody>
+          <tr>
+             <th scope="row">@i</th>
+             <td>@item.RiderId</td>
+             <td>@item.RiderName</td>
+       </tbody>
+        i += 1;
+    }
+   }
+}
+</table>
