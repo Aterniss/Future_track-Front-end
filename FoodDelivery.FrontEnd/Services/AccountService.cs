@@ -20,7 +20,7 @@ namespace FoodDelivery.FrontEnd.Services
                 BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
             _retryPolicy = Policy.Handle<HttpRequestException>()
-                .WaitAndRetryAsync(MaxRetries, t => TimeSpan.FromMilliseconds(100));
+                .WaitAndRetryAsync(MaxRetries, t => TimeSpan.FromSeconds(1));
         }
 
         public Task<Account> GetAll()

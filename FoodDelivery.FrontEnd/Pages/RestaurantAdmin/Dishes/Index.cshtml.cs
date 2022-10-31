@@ -30,6 +30,7 @@ namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Dishes
             }
             try
             {
+                Account = check;
                 if (Account.RestaurantId != null)
                 {
                     int id = Account.RestaurantId.Value;

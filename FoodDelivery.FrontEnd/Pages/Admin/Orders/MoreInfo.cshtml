@@ -22,16 +22,16 @@
 
 <p>User ID: @Model.OneOrder.IdUserNavigation.IdUser</p>
 <p>User full name: @Model.OneOrder.IdUserNavigation.FullName</p>
-<p>Created at: @Model.OneOrder.IdUserNavigation.UserAddress</p>
-<p>Last update: @Model.OneOrder.IdUserNavigation.UserAddress</p>
+<p>Created at: @Model.OneOrder.IdUserNavigation.CreatedAt</p>
+<p>Last update: @Model.OneOrder.IdUserNavigation.LastUpdate</p>
 @{
     if(@Model.OneOrder.IdUserNavigation.IsOver18 == true)
     {
-        <p>User ID: Yes</p>
+        <p>Is over 18?: Yes</p>
     }
     else
     {
-        <p>User ID: No</p>
+        <p>Is over 18?: No</p>
     }
     decimal total = 0;
 }
