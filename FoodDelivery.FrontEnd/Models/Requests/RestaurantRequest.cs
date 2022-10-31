@@ -7,9 +7,9 @@ namespace FoodDelivery.FrontEnd.Models.Requests
         [BindProperty]
         public string? RestaurantName { get; set; }
         [BindProperty]
-        public string? CategoryName { get; set; }
+        public string CategoryName { get; set; }
         [BindProperty]
-        public string? RestaurantAddress { get; set; }
+        public string RestaurantAddress { get; set; }
         [BindProperty]
         public int ZoneId { get; set; }
     }

@@ -23,9 +23,12 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
             this._foodCategoryService = foodCategoryService;
             this._zoneService = zoneService;
         }
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(string message)
         {
-
+            if(message != null)
+            {
+                Message = message;
+            }
             var check = HttpContext.Session.GetObject<Account>("Admin");
             if (check == null)
             {
@@ -58,12 +61,13 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
                 };
                 await _restaurant.Add(restaurant);
                 Message = $"Succesfully added!";
-                return Page();
+                return Redirect("/Admin/Restaurants");
             }
             catch (Exception ex)
             {
                 Message = ex.Message;
                 return Page();
+               
             }
 
 
