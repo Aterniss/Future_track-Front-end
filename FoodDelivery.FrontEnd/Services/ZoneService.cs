@@ -1,4 +1,6 @@
 ﻿using FoodDelivery.FrontEnd.Models;
+using Polly;
+using Polly.Retry;
 using System.Text;
 using System.Text.Json;
 
@@ -8,6 +10,9 @@ namespace FoodDelivery.FrontEnd.Services
     {
         private readonly HttpClient client;
         private readonly IConfiguration _configuration;
+        private const int MaxRetries = 3;
+        private const string Message = "Sorry, service is unavailable!";
+        private readonly AsyncRetryPolicy _retryPolicy;
         public ZoneService(IConfiguration configuration)
         {
             this._configuration = configuration;
@@ -15,6 +20,8 @@ namespace FoodDelivery.FrontEnd.Services
             {
                 BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
+            _retryPolicy = Policy.Handle<HttpRequestException>()
+                .WaitAndRetryAsync(MaxRetries, t => TimeSpan.FromMilliseconds(100));
         }
         public async Task Add(Zone zone)
         {
@@ -46,44 +53,63 @@ namespace FoodDelivery.FrontEnd.Services
         {
             var url = string.Format($"/zones");
             var result = new List<Zone>();
-            var response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
+            try
             {
+                return await _retryPolicy.ExecuteAsync(async () =>
+                {
+                    var result = await client.GetAsync(url);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var stringResponse = await result.Content.ReadAsStringAsync();
 
-                var stringResponse = await response.Content.ReadAsStringAsync();
+                        return System.Text.Json.JsonSerializer.Deserialize<List<Zone>>(stringResponse,
+                        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
-                result = System.Text.Json.JsonSerializer.Deserialize<List<Zone>>(stringResponse,
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                return result;
+                    }
+                    else
+                    {
+                        var msg = result.Content.ReadAsStringAsync();
+
+                        throw new Exception(msg.Result);
+                    }
+                });
             }
-            else
+            catch(HttpRequestException)
             {
-                var msg = response.Content.ReadAsStringAsync();
-
-                throw new Exception(msg.Result);
+                throw new HttpRequestException(Message);
             }
+
+           
+            
         }
 
         public async Task<Zone> GetById(int id)
         {
             var url = string.Format($"/dishes/{id}");
             var result = new Zone();
-            var response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
+            try
             {
+                return await _retryPolicy.ExecuteAsync(async () =>
+                {
+                    var result = await client.GetAsync(url);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var stringResponse = await result.Content.ReadAsStringAsync();
 
-                var stringResponse = await response.Content.ReadAsStringAsync();
+                        return System.Text.Json.JsonSerializer.Deserialize<Zone>(stringResponse,
+                        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                    }
+                    else
+                    {
+                        var msg = result.Content.ReadAsStringAsync();
 
-                result = System.Text.Json.JsonSerializer.Deserialize<Zone>(stringResponse,
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                return result;
+                        throw new Exception(msg.Result);
+                    }
+                });
             }
-            else
+            catch (HttpRequestException)
             {
-                var msg = response.Content.ReadAsStringAsync();
-
-                throw new Exception(msg.Result);
-
+                throw new Exception(Message);
             }
         }
 

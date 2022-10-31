@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
         public IEnumerable<Dish>? Dishes { get; set; }
         public Dish? OneDish { get; set; }
         public Account? Account { get; set; }
+        public string Message { get; set; }
 
 
         public IndexModel(IDishService dish)
@@ -27,10 +28,19 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
             {
                 return Redirect("/Index");
             }
-            var result = await _dish.GetAll();
-            Dishes = result;
-            Account = check;
-            return Page();
+            try
+            {
+                var result = await _dish.GetAll();
+                Dishes = result;
+                Account = check;
+                return Page();
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
+            
 
         }
     }

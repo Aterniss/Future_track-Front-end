@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Zones
         public IEnumerable<Zone>? Zones { get; set; }
         public Zone? OneZone { get; set; }
         public Account? Account { get; set; }
+        public string Message { get; set; }
 
 
         public IndexModel(IZoneService zone)
@@ -27,10 +28,18 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Zones
             {
                 return Redirect("/Index");
             }
-            var result = await _zone.GetAll();
-            Zones = result;
-            Account = check;
-            return Page();
+            try
+            {
+                var result = await _zone.GetAll();
+                Zones = result;
+                Account = check;
+                return Page();
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
 
         }
     }
