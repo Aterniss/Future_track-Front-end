@@ -1,4 +1,6 @@
 ﻿using FoodDelivery.FrontEnd.Models;
+using Polly;
+using Polly.Retry;
 using System.Text.Json;
 
 namespace FoodDelivery.FrontEnd.Services
@@ -7,6 +9,9 @@ namespace FoodDelivery.FrontEnd.Services
     {
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
+        private const int MaxRetries = 3;
+        private const string Message = "Sorry,the service is unavailable!";
+        private readonly AsyncRetryPolicy _retryPolicy;
         public AccountService(IConfiguration configuration)
         {
             this._configuration = configuration;
@@ -14,6 +19,8 @@ namespace FoodDelivery.FrontEnd.Services
             {
                 BaseAddress = new Uri(_configuration["AppSettings:BaseAPIUrl"])
             };
+            _retryPolicy = Policy.Handle<HttpRequestException>()
+                .WaitAndRetryAsync(MaxRetries, t => TimeSpan.FromMilliseconds(100));
         }
 
         public Task<Account> GetAll()
@@ -30,25 +37,33 @@ namespace FoodDelivery.FrontEnd.Services
         {
             var url = string.Format($"/accounts/{username}, {password}");
             var result = new Account();
-            var response = await _client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
+            try
             {
+                 return await _retryPolicy.ExecuteAsync(async () =>
+                {
+                    var response = await _client.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
 
-                var stringResponse = await response.Content.ReadAsStringAsync();
+                        var stringResponse = await response.Content.ReadAsStringAsync();
 
-                result = System.Text.Json.JsonSerializer.Deserialize<Account>(stringResponse,
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                        result = System.Text.Json.JsonSerializer.Deserialize<Account>(stringResponse,
+                        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                        return result;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                });
+                
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            catch (HttpRequestException)
             {
-                return null;
-            }
-            else
-            {
-                throw new HttpRequestException(response.ReasonPhrase);
+                throw new HttpRequestException(Message);
             }
 
-            return result;
+            
         }
     }
 }

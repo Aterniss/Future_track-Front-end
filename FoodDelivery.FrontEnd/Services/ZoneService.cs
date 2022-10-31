@@ -11,7 +11,7 @@ namespace FoodDelivery.FrontEnd.Services
         private readonly HttpClient client;
         private readonly IConfiguration _configuration;
         private const int MaxRetries = 3;
-        private const string Message = "Sorry, service is unavailable!";
+        private const string Message = "Sorry,the service is unavailable!";
         private readonly AsyncRetryPolicy _retryPolicy;
         public ZoneService(IConfiguration configuration)
         {
@@ -26,27 +26,49 @@ namespace FoodDelivery.FrontEnd.Services
         public async Task Add(Zone zone)
         {
             var url = string.Format($"/zones/");
-            var userString = JsonSerializer.Serialize(zone);
-            var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(url, requestContent);
-            var msg = response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
+            try
             {
-                throw new Exception(msg.Result);
+                await _retryPolicy.ExecuteAsync(async () => {
+                    var userString = JsonSerializer.Serialize(zone);
+                    var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
+                    var response = await client.PostAsync(url, requestContent);
+                    var msg = response.Content.ReadAsStringAsync();
+                    if (response.IsSuccessStatusCode == false)
+                    {
+                        throw new Exception(msg.Result);
+                    }
+                    response.EnsureSuccessStatusCode();
+                });  
             }
-            response.EnsureSuccessStatusCode();
+            catch (HttpRequestException)
+            {
+                throw new HttpRequestException(Message);
+            }
+            
         }
 
         public async Task Delete(int id)
         {
             var url = string.Format($"/zones/{id}");
-            var response = await client.DeleteAsync(url);
-            var msg = response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
+            try
             {
-                throw new Exception(msg.Result);
+                await _retryPolicy.ExecuteAsync(async () =>
+                {
+                    var response = await client.DeleteAsync(url);
+                    var msg = response.Content.ReadAsStringAsync();
+                    if (response.IsSuccessStatusCode == false)
+                    {
+                        throw new Exception(msg.Result);
+                    }
+                    response.EnsureSuccessStatusCode();
+                });
+                
             }
-            response.EnsureSuccessStatusCode();
+            catch (HttpRequestException)
+            {
+                throw new HttpRequestException(Message);
+            }
+            
         }
 
         public async Task<IEnumerable<Zone>> GetAll()
@@ -116,15 +138,27 @@ namespace FoodDelivery.FrontEnd.Services
         public async Task Update(Zone zone, int id)
         {
             var url = string.Format($"/zones/{id}");
-            var userString = JsonSerializer.Serialize(zone);
-            var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync(url, requestContent);
-            var msg = response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode == false)
+            try
             {
-                throw new Exception(msg.Result);
+                 await _retryPolicy.ExecuteAsync(async () =>
+                {
+                    var userString = JsonSerializer.Serialize(zone);
+                    var requestContent = new StringContent(userString, Encoding.UTF8, "application/json");
+                    var response = await client.PutAsync(url, requestContent);
+                    var msg = response.Content.ReadAsStringAsync();
+                    if (response.IsSuccessStatusCode == false)
+                    {
+                        throw new Exception(msg.Result);
+                    }
+                    response.EnsureSuccessStatusCode();
+                });
+
+                
             }
-            response.EnsureSuccessStatusCode();
+            catch(HttpRequestException)
+            {
+                throw new Exception(Message);
+            }
         }
     }
 }
