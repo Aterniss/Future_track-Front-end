@@ -1,8 +1,13 @@
 ﻿@page
 @model FoodDelivery.FrontEnd.Pages.Admin.Riders.IndexModel
 @{
-}
-<h3>Riders:</h3>
+    if(Model.Message != null)
+    {
+        <h1 style="color:red">@Model.Message</h1>
+    }
+    else
+    {
+        <h3>Riders:</h3>
 <a class="btn btn-primary" asp-page="/Admin/Index">Back</a>
 <a class="btn btn-success" asp-page="/Admin/Riders/Add">Add new Rider</a>
 <br />
@@ -41,3 +46,5 @@
    }
 }
 </table>
+    }
+}

@@ -10,7 +10,8 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
         private readonly IFoodCategoryService _category;
         public IEnumerable<FoodCategory> Categories { get; set; }
         public Account? Account { get; set; }
-       
+        public string Message { get; set; }
+
 
         public IndexModel(IFoodCategoryService category)
         {
@@ -26,10 +27,19 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
             {
                 return Redirect("/Index");
             }
-            var result = await _category.GetAll();
-            Categories = result;
-            Account = check;
-            return Page();
+            try
+            {
+                var result = await _category.GetAll();
+                Categories = result;
+                Account = check;
+                return Page();
+            }
+            catch (HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
+            
 
         }
     }

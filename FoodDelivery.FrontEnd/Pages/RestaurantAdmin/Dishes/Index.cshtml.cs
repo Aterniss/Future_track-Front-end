@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Dishes
         public IEnumerable<Dish>? Dishes { get; set; }
         public int RestaurantId { get; set; }
         public Account Account { get; set; }
+        public string Message { get; set; }
 
 
         public IndexModel(IDishService dish)
@@ -27,10 +28,9 @@ namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Dishes
             {
                 return Redirect("/Index");
             }
-            else
+            try
             {
-                Account = check;
-                if(Account.RestaurantId != null)
+                if (Account.RestaurantId != null)
                 {
                     int id = Account.RestaurantId.Value;
                     RestaurantId = id;
@@ -39,10 +39,14 @@ namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Dishes
                     return Page();
                 }
                 return Redirect("/Error");
-                
-                
             }
-            
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
+                
+               
         }
     }
 }

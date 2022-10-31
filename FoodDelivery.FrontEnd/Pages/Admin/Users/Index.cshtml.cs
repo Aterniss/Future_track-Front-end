@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
         private readonly IUserService _user;
         public IEnumerable<User>? Users { get; set; }
         public User? OneUser { get; set; }
+        public string Message { get; set; }
 
         public IndexModel(IUserService user)
         {
@@ -27,10 +28,19 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
             {
                 return Redirect("/Index");
             }
-            var result = await _user.GetAll();
-            Users = result;
-            Account = check;
-            return Page();
+            try
+            {
+                var result = await _user.GetAll();
+                Users = result;
+                Account = check;
+                return Page();
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
+            
 
         }
     }

@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Riders
         public IEnumerable<Rider>? Riders { get; set; }
         public int RestaurantId { get; set; }
         public Account Account { get; set; }
+        public string Message { get; set; }
 
         public IndexModel(IRiderService rider)
         {
@@ -25,7 +26,7 @@ namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Riders
             {
                 return Redirect("/Index");
             }
-            else
+            try
             {
                 Account = check;
                 if (Account.RestaurantId != null)
@@ -37,9 +38,14 @@ namespace FoodDelivery.FrontEnd.Pages.RestaurantAdmin.Riders
                     return Page();
                 }
                 return Redirect("/Error");
-
-
             }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
+                
+
         }
     }
 }

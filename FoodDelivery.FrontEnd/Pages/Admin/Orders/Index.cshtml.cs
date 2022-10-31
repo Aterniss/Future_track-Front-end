@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Orders
         public IEnumerable<Order>? Orders { get; set; }
         public Order? OneOrder { get; set; }
         public Account? Account { get; set; }
+        public string Message { get; set; }
 
 
         public IndexModel(IOrderService order)
@@ -27,10 +28,18 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Orders
             {
                 return Redirect("/Index");
             }
-            var result = await _order.GetAll();
-            Orders = result;
-            Account = check;
-            return Page();
+            try
+            {
+                var result = await _order.GetAll();
+                Orders = result;
+                Account = check;
+                return Page();
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
 
         }
     }

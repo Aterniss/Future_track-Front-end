@@ -10,7 +10,7 @@ namespace FoodDelivery.FrontEnd.Services
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
         private const int MaxRetries = 3;
-        private const string Message = "Sorry,the service is unavailable!";
+        private const string Message = "Sorry the service is unavailable!";
         private readonly AsyncRetryPolicy _retryPolicy;
         public AccountService(IConfiguration configuration)
         {

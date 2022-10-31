@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
         public IEnumerable<Rider>? Riders { get; set; }
         public Rider? OneRider { get; set; }
         public Account? Account { get; set; }
+        public string Message { get; set; }
 
 
         public IndexModel(IRiderService rider)
@@ -27,10 +28,18 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
             {
                 return Redirect("/Index");
             }
-            var result = await _rider.GetAll();
-            Riders = result;
-            Account = check;
-            return Page();
+            try
+            {
+                var result = await _rider.GetAll();
+                Riders = result;
+                Account = check;
+                return Page();
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
 
         }
     }

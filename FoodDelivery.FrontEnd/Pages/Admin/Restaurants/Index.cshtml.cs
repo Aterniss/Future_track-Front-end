@@ -12,6 +12,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
         public IEnumerable<RestaurantModel>? Restaurants { get; set; }
         public RestaurantModel? OneRestaurant { get; set; }
         public Account? Account { get; set; }
+        public string Message { get; set; }
 
 
         public IndexModel(IRestaurantServices restaurant)
@@ -28,10 +29,19 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
             {
                 return Redirect("/Index");
             }
-            var result = await _restaurant.GetAll();
-            Restaurants = result;
-            Account = check;
-            return Page();
+            try
+            {
+                var result = await _restaurant.GetAll();
+                Restaurants = result;
+                Account = check;
+                return Page();
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
+            
 
         }
     }

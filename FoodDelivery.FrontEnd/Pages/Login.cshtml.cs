@@ -22,34 +22,42 @@ namespace FoodDelivery.FrontEnd.Pages
         }
         public async Task<IActionResult> OnPostSubmit(Login login)
         {
-            
-            var result = await _account.Login(login.UserName, login.UserPassword);
-            if (result == null)
+            try
             {
-                Message = "Username or password is incorrect!";
+                var result = await _account.Login(login.UserName, login.UserPassword);
+                if (result == null)
+                {
+                    Message = "Username or password is incorrect!";
+                    return Page();
+                }
+                Account = result;
+
+                if (result.Role == 1)
+                {
+                    HttpContext.Session.SetObject("Customer", result);
+                    return Redirect("/Customer");
+                }
+                else if (result.Role == 2)
+                {
+                    HttpContext.Session.SetObject("Restaurant", result);
+                    return Redirect("/RestaurantAdmin");
+                }
+                else if (result.Role == 3)
+                {
+                    HttpContext.Session.SetObject("Admin", result);
+                    return Redirect("/Admin");
+                }
+                else
+                {
+                    return Redirect("/Error");
+                }
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
                 return Page();
             }
-            Account = result;
             
-            if (result.Role == 1)
-            {
-                HttpContext.Session.SetObject("Customer", result);
-                return Redirect("/Customer");
-            }
-            else if(result.Role == 2)
-            {
-                HttpContext.Session.SetObject("Restaurant", result);
-                return Redirect("/RestaurantAdmin");
-            }
-            else if (result.Role == 3)
-            {
-                HttpContext.Session.SetObject("Admin", result);
-                return Redirect("/Admin");
-            }
-            else
-            {
-                return Redirect("/Error");
-            }
 
         }
     }
