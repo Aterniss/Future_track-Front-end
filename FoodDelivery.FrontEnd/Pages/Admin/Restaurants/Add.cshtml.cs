@@ -10,15 +10,20 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
     public class AddModel : PageModel
     {
         private readonly IRestaurantServices _restaurant;
-        public Account? Account { get; set; }
+        private readonly IFoodCategoryService _foodCategoryService;
+        private readonly IZoneService _zoneService;
+        public IEnumerable<Zone> Zones { get; set; }
+        public IEnumerable<FoodCategory> Categories { get; set; }
         public RestaurantRequest? Request { get; set; }
         public string Message { get; set; }
 
-        public AddModel(IRestaurantServices restaurant)
+        public AddModel(IRestaurantServices restaurant, IFoodCategoryService foodCategoryService, IZoneService zoneService)
         {
             this._restaurant = restaurant;
+            this._foodCategoryService = foodCategoryService;
+            this._zoneService = zoneService;
         }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
 
             var check = HttpContext.Session.GetObject<Account>("Admin");
@@ -26,8 +31,17 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
             {
                 return Redirect("/Index");
             }
-            Account = check;
-            return Page();
+            try
+            {
+                Zones = await _zoneService.GetAll();
+                Categories = await _foodCategoryService.GetAll();
+                return Page();
+            }
+            catch (HttpRequestException)
+            {
+                Message = "You can not add new restaurant";
+                return Page();
+            }
 
         }
         public async Task<IActionResult> OnPostSubmit(RestaurantRequest request)
