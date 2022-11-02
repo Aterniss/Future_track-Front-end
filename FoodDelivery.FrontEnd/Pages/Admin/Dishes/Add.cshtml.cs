@@ -43,7 +43,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
                     DishDescription = request.DishDescription,
                     Price = request.Price / 100,
                     Require18 = request.Require18,
-                    RestaurantId = restaurant
+                    RestaurantId = request.RestaurantId
         
                 };
                 await _dish.Add(dish);
