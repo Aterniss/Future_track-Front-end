@@ -10,7 +10,7 @@ namespace FoodDelivery.FrontEnd.Pages.Restaurants
         private readonly IRestaurantServices _restaurant;
 
         public RestaurantModel Restaurant;
-       
+        public string Message { get; set; }
 
 
         public ViewModel(IRestaurantServices restaurant)
@@ -22,9 +22,17 @@ namespace FoodDelivery.FrontEnd.Pages.Restaurants
 
         public async Task<IActionResult> OnGet(int id)
         {
-            var result = await _restaurant.GetById(id);
-            Restaurant = result;
-            return Page();
+            try
+            {
+                var result = await _restaurant.GetById(id);
+                Restaurant = result;
+                return Page();
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
         }
 
     }

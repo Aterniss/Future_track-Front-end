@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages.Restaurants
 
         public IEnumerable<RestaurantModel>? Restaurants;
         public RestaurantModel? Restaurant;
+        public string Message { get; set; }
 
         public IndexModel(IRestaurantServices restaurant)
         {
@@ -19,9 +20,18 @@ namespace FoodDelivery.FrontEnd.Pages.Restaurants
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var result = await _restaurant.GetAll();
-            Restaurants = result;
-            return Page();
+            try
+            {
+                var result = await _restaurant.GetAll();
+                Restaurants = result;
+                return Page();
+            }
+            catch(HttpRequestException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
+            
         }
 
        

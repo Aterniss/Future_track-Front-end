@@ -1,10 +1,13 @@
 ﻿@page "{id}"
 @model FoodDelivery.FrontEnd.Pages.Restaurants.ViewModel
 @{
-   
-}
-
-<h3>Hello!</h3>
+    if(Model.Message != null)
+    {
+        <h1 style="color:red">@Model.Message</h1>
+    }
+    else
+    {
+        <h3>Hello!</h3>
 <a class="btn btn-primary" asp-page="/Restaurants/Index">Back</a>
 
 <h4>Information about: @Model.Restaurant.RestaurantName</h4>
@@ -57,3 +60,6 @@
 </table>
 <br />
 <a class="btn btn-primary" href="/Restaurants">Back</a>
+    }
+}
+

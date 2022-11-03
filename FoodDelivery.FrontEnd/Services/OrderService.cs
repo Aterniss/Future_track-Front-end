@@ -43,7 +43,7 @@ namespace FoodDelivery.FrontEnd.Services
                     response.EnsureSuccessStatusCode();
                 });
             }
-            catch (HttpRequestException)
+            catch (Exception)
             {
                 throw new HttpRequestException(Message);
             }
@@ -66,7 +66,7 @@ namespace FoodDelivery.FrontEnd.Services
                     response.EnsureSuccessStatusCode();
                 });
             }
-            catch (HttpRequestException)
+            catch (Exception)
             {
                 throw new HttpRequestException(Message);
             }
@@ -99,7 +99,7 @@ namespace FoodDelivery.FrontEnd.Services
                     }
                 });
             }
-            catch (HttpRequestException)
+            catch (Exception)
             {
                 throw new HttpRequestException(Message);
             }
@@ -132,7 +132,7 @@ namespace FoodDelivery.FrontEnd.Services
                     }
                 });
             }
-            catch (HttpRequestException)
+            catch (Exception)
             {
                 throw new HttpRequestException(Message);
             }
@@ -166,7 +166,7 @@ namespace FoodDelivery.FrontEnd.Services
                     }
                 });
             }
-            catch (HttpRequestException)
+            catch (Exception)
             {
                 throw new HttpRequestException(Message);
             }
@@ -191,7 +191,7 @@ namespace FoodDelivery.FrontEnd.Services
                     response.EnsureSuccessStatusCode();
                 });
             }
-            catch (HttpRequestException)
+            catch (Exception)
             {
                 throw new HttpRequestException(Message);
             }

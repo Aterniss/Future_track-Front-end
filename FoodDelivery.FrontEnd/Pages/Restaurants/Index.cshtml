@@ -4,9 +4,13 @@
 @{
     ViewData["Title"] = "Restaurants";
     ViewData["LoginService"] = "Login";
-
-}
-<h3>Restaurants</h3>
+    if(@Model.Message != null)
+    {
+        <h1 style="color:red">@Model.Message</h1>
+    }
+    else
+    {
+        <h3>Restaurants</h3>
 
 <table class="table">
   <thead class="thead-dark">
@@ -40,3 +44,5 @@
        }
     }
     </table>
+    }
+}
