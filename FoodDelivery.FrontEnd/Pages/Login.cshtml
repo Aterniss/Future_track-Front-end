@@ -4,9 +4,14 @@
 
 @{
     ViewData["Title"] = "Log in";
-    ViewData["LoginService"] = "Login";
-}
-<h3>Log in</h3>
+
+    if(Model.Exception != null)
+    {
+        <h1>@Model.Message</h1>
+    }
+    else
+    {
+        <h3>Log in</h3>
 <body>
 <form method="post">
   <div class="form-group">
@@ -28,3 +33,6 @@
         }
     }
 </body>
+    }
+
+}

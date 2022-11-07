@@ -11,6 +11,7 @@ namespace FoodDelivery.FrontEnd.Pages
 
         public Account? Account { get; set; }
         public string? Message { get; set; }
+        public string Exception { get; set; }
 
 
         public LoginModel(IAccountService account)
@@ -54,7 +55,7 @@ namespace FoodDelivery.FrontEnd.Pages
             }
             catch(HttpRequestException e)
             {
-                Message = e.Message;
+                Exception = e.Message;
                 return Page();
             }
             
