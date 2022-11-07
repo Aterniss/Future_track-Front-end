@@ -8,15 +8,17 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
     public class IndexModel : PageModel
     {
         private readonly IDishService _dish;
+        private readonly ILogger<IndexModel> _logger;
         public IEnumerable<Dish>? Dishes { get; set; }
         public Dish? OneDish { get; set; }
         public Account? Account { get; set; }
         public string Message { get; set; }
 
 
-        public IndexModel(IDishService dish)
+        public IndexModel(IDishService dish, ILogger<IndexModel> logger)
         {
             this._dish = dish;
+            this._logger = logger;
         }
 
 
@@ -37,6 +39,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
             }
             catch(HttpRequestException e)
             {
+                _logger.LogError(e.Message);
                 Message = e.Message;
                 return Page();
             }

@@ -8,14 +8,16 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
     public class IndexModel : PageModel
     {
         private readonly IFoodCategoryService _category;
+        private readonly ILogger<IndexModel> _logger;
         public IEnumerable<FoodCategory> Categories { get; set; }
         public Account? Account { get; set; }
         public string Message { get; set; }
 
 
-        public IndexModel(IFoodCategoryService category)
+        public IndexModel(IFoodCategoryService category, ILogger<IndexModel> logger)
         {
             this._category = category;
+            _logger = logger;
         }
 
 
@@ -36,6 +38,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
             }
             catch (HttpRequestException e)
             {
+                _logger.LogError(e.Message);
                 Message = e.Message;
                 return Page();
             }
