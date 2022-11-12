@@ -28,13 +28,11 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: AzureRmWebAppDeployment@4
+- task: DotNetCoreCLI@2
   inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Portal'
-    appType: 'webApp'
-    WebAppName: 'Delivery-dt'
-    deployToSlotOrASE: true
-    ResourceGroupName: 'Devoteam-project'
-    SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+- task: PublishBuildArtifacts@1
