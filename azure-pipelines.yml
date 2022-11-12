@@ -28,10 +28,13 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: AzureWebApp@1
+- task: AzureRmWebAppDeployment@4
   inputs:
+    ConnectionType: 'AzureRM'
     azureSubscription: 'Portal'
     appType: 'webApp'
-    appName: 'Delivery-dt'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    deploymentMethod: 'auto'
+    WebAppName: 'Delivery-dt'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'Devoteam-project'
+    SlotName: 'production'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
