@@ -1,2 +1,2 @@
-﻿1. Put base url address into Appsettings.json
-2. Thing about repeat API call when first try does not response.
+﻿Exception messages are wrong!
+Add hash password method

@@ -10,7 +10,6 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
     public class AddModel : PageModel
     {
         private readonly IUserService _user;
-        public Account? Account { get; set; }
         public UserRequest? Request { get; set; }
         public string Message { get; set; }
 
@@ -26,7 +25,6 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
             {
                 return Redirect("/Index");
             }
-            Account = check;
             return Page();
 
         }

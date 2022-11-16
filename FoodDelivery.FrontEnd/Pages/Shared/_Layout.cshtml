@@ -59,7 +59,11 @@
                          </li>
                         }
                     </ul>
-                       <a class="btn btn-primary" asp-area="" asp-page="/@ViewData["Status"]">@ViewData["Status"]</a>
+                    @if(ViewData["Status"].Equals("Login"))
+                    {
+                      <a class="btn btn-light" asp-area="" asp-page="/Register" style="margin-right:10px">Register</a>
+                    }
+                      <a class="btn btn-primary" asp-area="" asp-page="/@ViewData["Status"]">@ViewData["Status"]</a>
                         
                 </div>
             </div>

@@ -3,27 +3,23 @@ using FoodDelivery.FrontEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
+namespace FoodDelivery.FrontEnd.Pages.Admin.Accounts
 {
     public class IndexModel : PageModel
     {
-        private readonly IDishService _dish;
+        private readonly IAccountService _account;
         private readonly ILogger<IndexModel> _logger;
-        public IEnumerable<Dish>? Dishes { get; set; }
-        public Dish? OneDish { get; set; }
+        public IEnumerable<Account>? Accounts { get; set; }
         public string Message { get; set; }
 
-
-        public IndexModel(IDishService dish, ILogger<IndexModel> logger)
+        public IndexModel(IAccountService account, ILogger<IndexModel> logger)
         {
-            this._dish = dish;
-            this._logger = logger;
+            _account = account;
+            _logger = logger;
         }
 
-
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGet()
         {
-
             var check = HttpContext.Session.GetObject<Account>("Admin");
             if (check == null)
             {
@@ -31,8 +27,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
             }
             try
             {
-                var result = await _dish.GetAll();
-                Dishes = result;
+                Accounts = await _account.GetAll();
                 return Page();
             }
             catch(HttpRequestException e)
@@ -41,8 +36,6 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
                 Message = e.Message;
                 return Page();
             }
-            
-
         }
     }
 }
