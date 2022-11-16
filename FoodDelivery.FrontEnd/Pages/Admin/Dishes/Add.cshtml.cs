@@ -3,29 +3,31 @@ using FoodDelivery.FrontEnd.Models.Requests;
 using FoodDelivery.FrontEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TFoodDelivery.FrontEnd.Models;
 
 namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
 {
     public class AddModel : PageModel
     {
         private readonly IDishService _dish;
-        public Account? Account { get; set; }
+        private readonly IRestaurantServices _restaurantServices;
+        public IEnumerable<RestaurantModel> Restaurants { get; set; }
         public DishRequest? Request { get; set; }
         public string Message { get; set; }
 
-        public AddModel(IDishService dish)
+        public AddModel(IDishService dish, IRestaurantServices restaurantServices)
         {
             this._dish = dish;
+            _restaurantServices = restaurantServices;
         }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-
             var check = HttpContext.Session.GetObject<Account>("Admin");
             if (check == null)
             {
                 return Redirect("/Index");
             }
-            Account = check;
+            Restaurants = await _restaurantServices.GetAll();
             return Page();
 
         }

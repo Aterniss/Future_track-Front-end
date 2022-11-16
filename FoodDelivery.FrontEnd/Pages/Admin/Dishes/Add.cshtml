@@ -19,8 +19,22 @@
     <input type="text" class="form-control" id="DishDescription" name="DishDescription" placeholder="Enter description" required>
   </div>
   <div class="form-group">
-    <label for="RestaurantId">Restaurant ID</label>
-    <input type="number" class="form-control" id="RestaurantId" name="RestaurantId" required>
+    <label for="RestaurantId">Restaurant</label>
+    <select name="RestaurantId">
+            @{
+                if(Model.Restaurants != null)
+                {
+                    @foreach(var item in Model.Restaurants)
+                    {
+                        <option value="@item.RestaurantId">ID: @item.RestaurantId - name: @item.RestaurantName</option>
+                    }
+                }
+                else
+                {
+                    <option value="null">NULL</option>
+                }
+            }
+    </select>
   </div>
   <div class="form-group">
     <label for="Price">Price</label>

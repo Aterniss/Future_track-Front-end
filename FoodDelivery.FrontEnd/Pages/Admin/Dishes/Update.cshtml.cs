@@ -3,13 +3,15 @@ using FoodDelivery.FrontEnd.Models.Requests;
 using FoodDelivery.FrontEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TFoodDelivery.FrontEnd.Models;
 
 namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
 {
     public class UpdateModel : PageModel
     {
         private readonly IDishService _dish;
-        public Account? Account { get; set; }
+        private readonly IRestaurantServices _restaurantServices;
+        public IEnumerable<RestaurantModel> Restaurants { get; set; }
         public DishRequest? Request { get; set; }
         public int Id { get; set; }
         public string DishName { get; set; }
@@ -20,19 +22,19 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
 
 
         public string Message { get; set; }
-        public UpdateModel(IDishService dish)
+        public UpdateModel(IDishService dish, IRestaurantServices restaurantServices)
         {
             this._dish = dish;
+            this._restaurantServices = restaurantServices;
         }
-        public IActionResult OnGetAsync(int id, string name, string desc, int restaurant, decimal price, bool require)
+        public async Task<IActionResult> OnGetAsync(int id, string name, string desc, int restaurant, decimal price, bool require)
         {
             var check = HttpContext.Session.GetObject<Account>("Admin");
-
             if (check == null)
             {
                 return Redirect("/Index");
             }
-            Account = check;
+            Restaurants = await _restaurantServices.GetAll();
             DishName = name;
             DishDescription = desc;
             RestaurantId = restaurant;
@@ -54,7 +56,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
                 {
                     DishName = request.DishName,
                     DishDescription = request.DishDescription,
-                    Price = request.Price,
+                    Price = request.Price / 100,
                     RestaurantId = request.RestaurantId,
                     Require18 = request.Require18
                 };

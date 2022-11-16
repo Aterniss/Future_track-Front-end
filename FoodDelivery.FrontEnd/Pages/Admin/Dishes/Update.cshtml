@@ -16,14 +16,28 @@
   <div class="form-group">
     <label for="DishDescription">Dish description</label>
     <input type="text" class="form-control" id="DishDescription" name="DishDescription" value="@Model.DishDescription" required>
-  </div>
+  </div><br />
   <div class="form-group">
-    <label for="RestaurantId">Restaurant ID</label>
-    <input type="number" class="form-control" id="RestaurantId" name="RestaurantId" value="@Model.RestaurantId" required>
-  </div>
+    <label for="RestaurantId">Restaurant</label>
+    <select name="RestaurantId">
+            @{
+                if(Model.Restaurants != null)
+                {
+                    @foreach(var item in Model.Restaurants)
+                    {
+                        <option value="@item.RestaurantId">ID: @item.RestaurantId - name: @item.RestaurantName</option>
+                    }
+                }
+                else
+                {
+                    <option value="null">NULL</option>
+                }
+            }
+    </select>
+  </div><br />
   <div class="form-group">
     <label for="Price">Price</label>  
-    <input type="number" step="0.01" class="form-control" id="Price" name="Price" placeholder="@Model.Price" required>
+    <input type="number" step="0.01" class="form-control" id="Price" name="Price" placeholder="Price" required>
   </div>
   <br />
    <div class="form-group">
