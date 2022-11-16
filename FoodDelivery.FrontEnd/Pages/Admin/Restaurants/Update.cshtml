@@ -12,18 +12,46 @@
   <div class="form-group">
     <label for="RestaurantName">Restaurant name</label>
     <input type="text" class="form-control" id="RestaurantName" name="RestaurantName" value="@Model.RestaurantName">
-  </div>
+  </div><br />
   <div class="form-group">
     <label for="CategoryName">Category name</label>
-    <input type="text" class="form-control" id="CategoryName" name="CategoryName" value="@Model.CategoryName">
-  </div>
+    <select name="CategoryName">
+            @{
+                if(Model.Categories != null)
+                {
+                    @foreach(var item in Model.Categories)
+                    {
+                        <option value="@item.CategoryName">@item.CategoryName</option>
+                    }
+                }
+                else
+                {
+                    <option value="null">NULL</option>
+                }
+            }
+    </select>
+  </div><br />
   <div class="form-group">
     <label for="RestaurantAddress">Restaurant address</label>
     <input type="text" class="form-control" id="RestaurantAddress" name="RestaurantAddress" value="@Model.Address">
-  </div>
+  </div><br />
   <div class="form-group">
-    <label for="ZoneId">Zone ID</label>  
-    <input type="number" class="form-control" id="ZoneId" name="ZoneId" value="@Model.ZoneId">
+    <label for="ZoneId">Zone</label>
+    <select name="ZoneId">
+            @{
+                if(Model.Zones != null)
+                {
+                    @foreach(var item in Model.Zones)
+                    {
+                        <option value="@item.ZoneId">@item.ZoneName</option>
+                    }
+                }
+                else
+                {
+                    <option value="null">NULL</option>
+                }
+            }
+    </select>
   </div>
   <br />
   

@@ -10,6 +10,11 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
     public class UpdateModel : PageModel
     {
         private readonly IRestaurantServices _restaurant;
+        private readonly IFoodCategoryService _foodCategoryService;
+        private readonly IZoneService _zoneService;
+
+        public IEnumerable<Zone> Zones;
+        public IEnumerable<FoodCategory> Categories;
         public Account? Account { get; set; }
         public RestaurantRequest? Request { get; set; }
         public int Id { get; set; }
@@ -19,15 +24,18 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
         public int ZoneId { get; set; }
 
         public string Message { get; set; }
-        public UpdateModel(IRestaurantServices restaurant)
+        public UpdateModel(IRestaurantServices restaurant, IZoneService zones, IFoodCategoryService categories)
         {
             this._restaurant = restaurant;
+            this._zoneService = zones;
+            this._foodCategoryService = categories;
         }
-        public IActionResult OnGetAsync(int id, string restName, string cat, string address, int zone)
+        public async Task<IActionResult> OnGetAsync(int id, string restName, string cat, string address, int zone)
         {
 
             var check = HttpContext.Session.GetObject<Account>("Admin");
-
+            Zones = await _zoneService.GetAll();
+            Categories = await _foodCategoryService.GetAll();
             if (check == null)
             {
                 return Redirect("/Index");
