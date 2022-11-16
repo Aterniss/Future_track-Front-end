@@ -60,7 +60,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
                     ZoneId = request.ZoneId
                 };
                 await _restaurant.Update(restaurant, id);
-                return Redirect("/Admin/Restaurants");
+                return Redirect("/Admin/Restaurants/Index");
             }
             catch (Exception ex)
             {

@@ -9,14 +9,17 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
     public class AddModel : PageModel
     {
         private readonly IRiderService _rider;
-        public Account? Account { get; set; }
+        private readonly IZoneService _zoneService;
+
+        public IEnumerable<Zone> Zones { get; set; }
         public string Message { get; set; }
 
-        public AddModel(IRiderService rider)
+        public AddModel(IRiderService rider, IZoneService zoneService)
         {
             this._rider = rider;
+            this._zoneService = zoneService;
         }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
 
             var check = HttpContext.Session.GetObject<Account>("Admin");
@@ -24,7 +27,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
             {
                 return Redirect("/Index");
             }
-            Account = check;
+            Zones = await _zoneService.GetAll();
             return Page();
 
         }
@@ -38,8 +41,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
                     ZoneId = request.ZoneId
                 };
                 await _rider.Add(dish);
-                Message = $"Succesfully added!";
-                return Page();
+                return Redirect("/Admin/Riders/Index");
             }
             catch (Exception ex)
             {

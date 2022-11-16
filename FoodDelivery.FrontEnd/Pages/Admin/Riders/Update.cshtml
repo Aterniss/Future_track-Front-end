@@ -11,12 +11,26 @@
 <form method="post">
   <div class="form-group">
     <label for="RiderName">Rider name</label>
-    <input type="text" class="form-control" id="RiderName" name="RiderName" value="@Model.Name" required>
-  </div>
+    <input type="text" class="form-control" id="RiderName" name="RiderName" value="@Model.Name" maxlength="50" required>
+  </div><br />
   <div class="form-group">
-    <label for="ZoneId">Zone ID</label>
-    <input type="number" class="form-control" id="ZoneId" name="ZoneId" value="@Model.Zone" required>
-  </div>
+    <label for="ZoneId">Zone</label>
+    <select name="ZoneId">
+            @{
+                if(Model.Zones != null)
+                {
+                    @foreach(var item in Model.Zones)
+                    {
+                        <option value="@item.ZoneId">@item.ZoneName</option>
+                    }
+                }
+                else
+                {
+                    <option value="null">NULL</option>
+                }
+            }
+    </select>
+  </div><br />
   <br />
   <input type="submit" value="Submit"  class="btn btn-success" asp-page-handler="Submit">
 </form>

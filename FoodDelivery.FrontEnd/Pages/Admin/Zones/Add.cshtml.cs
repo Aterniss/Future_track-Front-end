@@ -38,8 +38,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Zones
                     ZoneName = request.ZoneName
                 };
                 await _zone.Add(zone);
-                Message = $"Succesfully added!";
-                return Page();
+                return Redirect("/Admin/Zones/Index");
             }
             catch (Exception ex)
             {

@@ -50,8 +50,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
                     UserAddress = request.UserAddress
                 };
                 await _user.Update(user, id);
-                Message = $"Succesfully updated!";
-                return Redirect("/Admin/Users");
+                return Redirect("/Admin/Users/Index");
             }
             catch (Exception ex)
             {

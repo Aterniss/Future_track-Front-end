@@ -49,8 +49,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
         
                 };
                 await _dish.Add(dish);
-                Message = $"Succesfully added!";
-                return Page();
+                return Redirect("/Admin/Dishes/Index");
             }
             catch (Exception ex)
             {

@@ -47,8 +47,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Users
                     UserAddress = request.UserAddress
                 };
                 await _user.Add(user);
-                Message = $"Succesfully added!";
-                return Page();
+                return Redirect("/Admin/Users/Index");
             }
             catch(Exception ex)
             {

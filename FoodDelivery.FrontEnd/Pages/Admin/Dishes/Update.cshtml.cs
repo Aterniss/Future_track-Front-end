@@ -61,8 +61,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Dishes
                     Require18 = request.Require18
                 };
                 await _dish.Update(dish, id);
-                Message = $"Succesfully updated!";
-                return Redirect("/Admin/Dishes");
+                return Redirect("/Admin/Dishes/Index");
             }
             catch (Exception ex)
             {

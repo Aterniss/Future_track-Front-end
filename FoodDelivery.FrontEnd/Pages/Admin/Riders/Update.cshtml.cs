@@ -9,6 +9,9 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
     public class UpdateModel : PageModel
     {
         private readonly IRiderService _rider;
+        private readonly IZoneService _zoneService;
+
+        public IEnumerable<Zone> Zones { get; set; }
         public Account? Account { get; set; }
         public RiderRequest? Request { get; set; }
         public int Id { get; set; }
@@ -17,11 +20,12 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
 
 
         public string Message { get; set; }
-        public UpdateModel(IRiderService rider)
+        public UpdateModel(IRiderService rider, IZoneService zoneService)
         {
             this._rider = rider;
+            this._zoneService = zoneService;
         }
-        public IActionResult OnGetAsync(int id, string name, int zone)
+        public async Task<IActionResult> OnGetAsync(int id, string name, int zone)
         {
             var check = HttpContext.Session.GetObject<Account>("Admin");
 
@@ -29,6 +33,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
             {
                 return Redirect("/Index");
             }
+            Zones = await _zoneService.GetAll();
             Account = check;
             Name = name;
             Zone = zone;
@@ -45,8 +50,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Riders
                     ZoneId = request.ZoneId
                 };
                 await _rider.Update(dish, id);
-                Message = $"Succesfully updated!";
-                return Redirect("/Admin/Riders");
+                return Redirect("/Admin/Riders/Index");
             }
             catch (Exception ex)
             {

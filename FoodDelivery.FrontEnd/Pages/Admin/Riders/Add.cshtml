@@ -13,12 +13,25 @@
   <div class="form-group">
     <label for="RiderName">Rider name</label>
     <input type="text" class="form-control" id="RiderName" name="RiderName" placeholder="Enter rider name" required >
-  </div>
+  </div><br />
   <div class="form-group">
-    <label for="ZoneId">Zone ID</label>
-    <input type="number" class="form-control" id="ZoneId" name="ZoneId" placeholder="1" required>
-  </div>
-  <br />
+    <label for="ZoneId">Zone</label>
+    <select name="ZoneId">
+            @{
+                if(Model.Zones != null)
+                {
+                    @foreach(var item in Model.Zones)
+                    {
+                        <option value="@item.ZoneId">@item.ZoneName</option>
+                    }
+                }
+                else
+                {
+                    <option value="null">NULL</option>
+                }
+            }
+    </select>
+  </div><br />
   <input type="submit" value="Submit"  class="btn btn-success" asp-page-handler="Submit">
 </form>
 @{

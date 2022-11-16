@@ -60,8 +60,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.Restaurants
                     ZoneId = request.ZoneId
                 };
                 await _restaurant.Add(restaurant);
-                Message = $"Succesfully added!";
-                return Redirect("/Admin/Restaurants");
+                return Redirect("/Admin/Restaurants/Index");
             }
             catch (Exception ex)
             {

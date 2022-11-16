@@ -39,8 +39,7 @@ namespace FoodDelivery.FrontEnd.Pages.Admin.FoodCategories
                     CategoryDescription = request.CategoryDescription
                 };
                 await _category.Add(category);
-                Message = $"Succesfully added!";
-                return Page();
+                return Redirect("/Admin/FoodCategories/Index");
             }
             catch (Exception ex)
             {
