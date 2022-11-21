@@ -1,8 +1,13 @@
 ﻿@page "{id}"
 @model FoodDelivery.FrontEnd.Pages.Admin.Orders.MoreInfoModel
 @{
-}
-<h1>More info:</h1>
+    if(Model.Message != null)
+    {
+        <h1 style="color:red">@Model.Message</h1>
+    }
+    else
+    {
+        <h1>More info:</h1>
 <a class="btn btn-primary" asp-page="/Admin/Orders/Index">Back</a>
 <br /><br />
 <h3>Order information:</h3>
@@ -24,7 +29,7 @@
 <p>User full name: @Model.OneOrder.IdUserNavigation.FullName</p>
 <p>Created at: @Model.OneOrder.IdUserNavigation.CreatedAt</p>
 <p>Last update: @Model.OneOrder.IdUserNavigation.LastUpdate</p>
-@{
+
     if(@Model.OneOrder.IdUserNavigation.IsOver18 == true)
     {
         <p>Is over 18?: Yes</p>
@@ -34,7 +39,7 @@
         <p>Is over 18?: No</p>
     }
     decimal total = 0;
-}
+
 <p>User address: @Model.OneOrder.IdUserNavigation.UserAddress</p>
 <br /><br />
 <h3>Dishes in order:</h3>
@@ -81,3 +86,5 @@
 }
 </table>
 <h4>TOTAL: @total</h4>
+    }
+}

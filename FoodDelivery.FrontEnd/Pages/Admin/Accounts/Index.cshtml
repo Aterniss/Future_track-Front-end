@@ -5,7 +5,6 @@
     {
         <h3>Dishes:</h3>
 <a class="btn btn-primary" asp-page="/Admin/Index">Back</a>
-<a class="btn btn-success" asp-page="/Admin/Accounts/Add">Add role</a>
 <table class="table">
   <thead class="thead-dark">
      <tr>
@@ -30,7 +29,7 @@
            <td>@item.EmailAddress</td>
            <td>@item.RoleNavigation.RoleName</td>
            <td style="border: 1px solid blue; background-color:lightblue">
-             <a asp-page="/Admin/Accounts/MoreInfo" asp-route-id="@item.Id" style="text-decoration:none; color:dimgrey;">View</a></td>
+           <a asp-page="/Admin/Accounts/MoreInfo" asp-route-id="@item.Id" style="text-decoration:none; color:dimgrey;">View</a></td>
            <td style="border:1px solid red; background-color:palevioletred">
            <a asp-page="/Admin/Accounts/Delete" asp-route-id="@item.Id" style="text-decoration:none; color:black;">Delete</a></td>
            </tr>
