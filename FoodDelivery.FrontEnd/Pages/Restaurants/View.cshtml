@@ -10,20 +10,20 @@
         <h3>Hello!</h3>
 <a class="btn btn-primary" asp-page="/Restaurants/Index">Back</a>
 
-<h4>Information about: @Model.Restaurant.RestaurantName</h4>
+<h4>Information about: @Model.Restaurant.RestaurantName</h4><br />
 <p>Restaurant address: @Model.Restaurant.RestaurantAddress</p>
-<p>Which zone: @Model.Restaurant.Zone?.ZoneName</p>
+<p>Zone: @Model.Restaurant.Zone?.ZoneName</p>
 <p>Category name: @Model.Restaurant.CategoryNameNavigation?.CategoryName</p>
-<p>Category description: @Model.Restaurant.CategoryNameNavigation?.CategoryDescription</p>
+<p>Description: @Model.Restaurant.CategoryNameNavigation?.CategoryDescription</p>
 <br />
 
-<h3>Dishes</h3>
+<h3>Menu:</h3>
 <table class="table">
   <thead class="thead-dark">
      <tr>
         <th scope="col">#</th>
-        <th scope="col">Dish name</th>
-        <th scope="col">Dish description</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
         <th scope="col">Price</th>
         <th scope="col">18+</th>
      </tr>
